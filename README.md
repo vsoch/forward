@@ -8,8 +8,11 @@ Useful for jupyter notebook and tensorboard, amongst other things.
 
 ## Setup
 
-Just run setup.sh to generate a parameter file.  You can always edit params.sh
-later to change these configuration options.
+You need to create a parameter file first.  To do so, follow the prompts at:
+
+`bash setup.sh`
+
+You can always edit params.sh later to change these configuration options.
 
 ## Usage
 
