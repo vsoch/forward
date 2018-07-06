@@ -74,6 +74,12 @@ your computer went to sleep), you can resume with:
 
 `bash resume.sh jupyter`
 
+### Connection refused after start.sh finished
+
+Sometimes you can get connection refused messages after the script has started
+up.  Just wait up to a minute and then refresh the opened web page, and this
+should fix the issue.
+
 ## Adding new sbatch scripts
 
 You can add more sbatch scripts by putting them in the sbatches directory.
