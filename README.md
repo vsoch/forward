@@ -8,7 +8,9 @@ Useful for jupyter notebook and tensorboard, amongst other things.
 
 ## Setup
 
-You need to create a parameter file first.  To do so, follow the prompts at:
+Clone this repository to your local machine.
+
+You will then need to create a parameter file.  To do so, follow the prompts at:
 
 `bash setup.sh`
 
