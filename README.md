@@ -48,6 +48,12 @@ Host sherlock
     ForwardX11Trusted yes
 ```
 
+### Notebook password
+
+If you have not set up notebook authentication before, you will need to set a
+password via `jupyter notebook password` on sherlock.  Make sure to pick a
+secure password!
+
 
 ## Usage
 
