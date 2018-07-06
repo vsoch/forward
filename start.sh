@@ -28,6 +28,7 @@ fi
 
 echo "== Getting destination directory =="
 SHERLOCK_HOME=`ssh sherlock pwd`
+ssh sherlock mkdir -p $SHERLOCK_HOME/forward-util
 
 echo "== Uploading sbatch script =="
 scp sbatches/$SBATCH sherlock:$SHERLOCK_HOME/forward-util/
