@@ -48,7 +48,7 @@ until [[ "$MACHINE" == "sh"* ]]
 do
     echo "not ready yet..."
     sleep 1
-    MACHINE=`ssh sherlock squeue --name=$NAME --user=$USER -o "%R" -h`
+    MACHINE=`ssh sherlock squeue --name=$NAME --user=$USERNAME -o "%R" -h`
 done
 
 echo "notebook running on $MACHINE"

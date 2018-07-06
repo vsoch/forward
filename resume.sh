@@ -9,5 +9,5 @@ then
 fi
 source params.sh
 
-MACHINE=`ssh sherlock squeue --name=$NAME --user=$USER -o "%R" -h`
+MACHINE=`ssh sherlock squeue --name=$NAME --user=$USERNAME -o "%R" -h`
 ssh -L $PORT:localhost:$PORT sherlock ssh -L $PORT:localhost:$PORT -N $MACHINE &

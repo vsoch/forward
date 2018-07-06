@@ -19,7 +19,7 @@ fi
 NAME=$1
 
 echo "Killing $NAME slurm job on sherlock"
-ssh sherlock "squeue --name=$NAME --user=$USER -o '%A' -h | xargs --no-run-if-empty /usr/bin/scancel"
+ssh sherlock "squeue --name=$NAME --user=$USERNAME -o '%A' -h | xargs --no-run-if-empty /usr/bin/scancel"
 
 echo "Killing listeners on sherlock"
 ssh sherlock "/usr/sbin/lsof -i :$PORT -t | xargs --no-run-if-empty kill"
