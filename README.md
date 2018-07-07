@@ -19,34 +19,25 @@ You can always edit params.sh later to change these configuration options.
 ### SSH config
 
 You will also need to at the minimum configure your ssh to recognize sherlock as
-a valid host.  I highly recommend you use the other set up options too to
+a valid host.  I highly recommend you use the set up options below to
 minimize the number of times you will need to type in your password/ two-factor!
-So put one of the following in your local ssh config (at ~/.ssh/config, create
-it if needed).
-
-Minimal:
+So put the following in your local ssh config (at ~/.ssh/config, create
+it if needed).  
 
 ```
 Host sherlock
     User put_your_username_here
-    Hostname login.sherlock.stanford.edu
-```
-
-Easier:
-
-```
-Host sherlock
-    User put_your_username_here
-    Hostname login.sherlock.stanford.edu
+    Hostname sh-ln01.stanford.edu
     GSSAPIDelegateCredentials yes
     GSSAPIAuthentication yes
     ControlMaster auto
     ControlPersist yes
     ControlPath ~/.ssh/%l%r@%h:%p
-    ForwardAgent yes
-    ForwardX11 yes
-    ForwardX11Trusted yes
 ```
+
+One downside is that you will be foregoing sherlock's load
+balancing since you need to be connecting to the same login machine at each
+step.
 
 ### Notebook password
 
