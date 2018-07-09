@@ -1,6 +1,6 @@
 # Project Lead:
 
-    - Raphael Townshend (@raphtown)
+    - Raphael Townshend <@raphtown>
 
 # Contributors:
 
