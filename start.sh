@@ -68,7 +68,7 @@ ALLOCATED="no"
 while [[ $ALLOCATED == "no" ]]
   do
 
-    MACHINE="`ssh sherlock squeue --name=$NAME --user=$USERNAME -o "%R" -h`"
+    MACHINE="`ssh sherlock squeue --name=$NAME --user=$USERNAME -o "%N" -h`"
     echo ${MACHINE}
 
     if [[ "$MACHINE" == "sh"* ]]
@@ -82,13 +82,8 @@ while [[ $ALLOCATED == "no" ]]
     sleep $TIMEOUT
     ATTEMPT=$(( ATTEMPT + 1 ))
     TIMEOUT=$(( TIMEOUT * 2 ))
-    echo $ATTEMPT
-    echo $TIMEOUT
-    echo $MAX_ATTEMPTS
 
   done
-
-echo $MACHINE
 
 # If we didn't get a node...
 if [[ "$MACHINE" != "sh"* ]]

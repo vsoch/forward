@@ -7,7 +7,9 @@ Forward sets up an sbatch script on sherlock and port forwards it back to your l
 Useful for jupyter notebook and tensorboard, amongst other things.
 
 ## Setup
+For interested users, a [tutorial is provided](https://vsoch.github.io/lessons/sherlock-jupyter/). Instructions are also documented in this README.
 
+### Clone the Repository
 Clone this repository to your local machine.
 
 You will then need to create a parameter file.  To do so, follow the prompts at:
@@ -63,7 +65,7 @@ To start a jupyter notebook in a specific directory:
 
 `bash start.sh jupyter /path/to/dir`
 
-To start tensorboarrd in a specific directory:
+To start tensorboarrd in a specific directory (careful here and not recommended, as is not password protected):
 
 `bash start.sh start /path/to/dir`
 
@@ -76,11 +78,29 @@ your computer went to sleep), you can resume with:
 
 `bash resume.sh jupyter`
 
+## Debugging
+
 ### Connection refused after start.sh finished
 
 Sometimes you can get connection refused messages after the script has started
 up.  Just wait up to a minute and then refresh the opened web page, and this
 should fix the issue.
+
+### Terminal Hangs when after start.sh
+
+Sometimes when you have changes in your network, you would need to reauthenticate.
+In the same way you might get a login issue here, usually opening a new shell resolves 
+the hangup.
+
+## How do I contribute?
+
+First, please read the [contributing docs](CONTRIBUTING.md). Generally, you will want to:
+
+ - fork the repository to your username
+ - clone your fork
+ - checkout a new branch for your feature, commit and push
+ - add your name to the CONTRIBUTORS.md
+ - issue a pull request!
 
 ## Adding new sbatch scripts
 
