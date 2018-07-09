@@ -92,6 +92,11 @@ Sometimes when you have changes in your network, you would need to reauthenticat
 In the same way you might get a login issue here, usually opening a new shell resolves 
 the hangup.
 
+## I ended a script, but can't start
+
+As you would kill a job on Sherlock and see some delay for the node to come down, the
+same can be try here! Try waiting 20-30 seconds to give the node time to exit, and try again.
+
 ## How do I contribute?
 
 First, please read the [contributing docs](CONTRIBUTING.md). Generally, you will want to:

@@ -32,6 +32,7 @@ then
 fi
 
 # Since we just have one port, only allow the user one running at a time
+# This command will return empty (not defined) if nothing running
 
 echo "== Checking for previous notebook =="
 PREVIOUS=`ssh sherlock squeue --name=$NAME --user=$USERNAME -o "%R" -h`
@@ -67,11 +68,10 @@ MACHINE=""
 ALLOCATED="no"
 while [[ $ALLOCATED == "no" ]]
   do
-
-    MACHINE="`ssh sherlock squeue --name=$NAME --user=$USERNAME -o "%N" -h`"
-    echo ${MACHINE}
-
-    if [[ "$MACHINE" == "sh"* ]]
+                                                                  # nodelist
+    MACHINE=`ssh sherlock squeue --name=$NAME --user=$USERNAME -o "%N" -h`
+    
+    if [[ "$MACHINE" != "" ]]
       then
         echo "Attempt ${ATTEMPT}: resources allocated to ${MACHINE}!.."  1>&2
         ALLOCATED="yes"
@@ -84,6 +84,10 @@ while [[ $ALLOCATED == "no" ]]
     TIMEOUT=$(( TIMEOUT * 2 ))
 
   done
+
+echo $MACHINE
+MACHINE="`ssh sherlock squeue --name=$NAME --user=$USERNAME -o "%R" -h`"
+echo $MACHINE
 
 # If we didn't get a node...
 if [[ "$MACHINE" != "sh"* ]]
@@ -99,4 +103,4 @@ ssh -L $PORT:localhost:$PORT sherlock ssh -L $PORT:localhost:$PORT -N "$MACHINE"
 
 sleep 5
 echo "== Connecting to notebook =="
-"Open your browser to http://localhost:$PORT"
+echo "Open your browser to http://localhost:$PORT"
