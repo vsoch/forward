@@ -20,7 +20,7 @@ You can always edit params.sh later to change these configuration options.
 
 #### Parameters
 
- - **PARTITION** If you intend to use a GPU (e.g., [sbatches/py-tensorflow-gpu.sbatch](sbatches/py-tensorflow-gpu.sbatch) the name of the PARTITION variable should be "gpu."
+ - **PARTITION** If you intend to use a GPU (e.g., [sbatches/py2-tensorflow.sbatch](sbatches/py2-tensorflow.sbatch) the name of the PARTITION variable should be "gpu."
 
 
 ### SSH config
