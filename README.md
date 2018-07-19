@@ -16,7 +16,12 @@ You will then need to create a parameter file.  To do so, follow the prompts at:
 
 `bash setup.sh`
 
-You can always edit params.sh later to change these configuration options.
+You can always edit params.sh later to change these configuration options. 
+
+#### Parameters
+
+ - **PARTITION** If you intend to use a GPU (e.g., [sbatches/py-tensorflow-gpu.sbatch](sbatches/py-tensorflow-gpu.sbatch) the name of the PARTITION variable should be "gpu."
+
 
 ### SSH config
 
@@ -65,7 +70,14 @@ To start a jupyter notebook in a specific directory:
 
 `bash start.sh jupyter /path/to/dir`
 
-To start tensorboarrd in a specific directory (careful here and not recommended, as is not password protected):
+To start a jupyter notebook with tensorflow in a specific directory:
+
+`bash start.sh py2-tensorflow /path/to/dir`
+bash start.sh py2-tensorflow /scratch/users/vsochat
+
+If you want a GPU node, make sure your partition is set to "gpu"
+
+To start tensorboard in a specific directory (careful here and not recommended, as is not password protected):
 
 `bash start.sh start /path/to/dir`
 
@@ -92,10 +104,22 @@ Sometimes when you have changes in your network, you would need to reauthenticat
 In the same way you might get a login issue here, usually opening a new shell resolves 
 the hangup.
 
+### Terminal Hangs on "== Checking for previous notebook =="
+
+This is the same bug as above - this command specifically is capturing output into
+a variable, so if it hangs longer than 5-10 seconds, it's likely hit the password 
+prompt and would hang indefinitely. If you issue a standard command that will
+re-prompt for your password in the terminal session, you should fix the issue.
+
+```bash
+$ ssh sherlock pwd
+```
+
 ## I ended a script, but can't start
 
 As you would kill a job on Sherlock and see some delay for the node to come down, the
 same can be try here! Try waiting 20-30 seconds to give the node time to exit, and try again.
+
 
 ## How do I contribute?
 
