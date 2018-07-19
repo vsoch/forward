@@ -73,9 +73,8 @@ To start a jupyter notebook in a specific directory:
 To start a jupyter notebook with tensorflow in a specific directory:
 
 `bash start.sh py2-tensorflow /path/to/dir`
-bash start.sh py2-tensorflow /scratch/users/vsochat
 
-If you want a GPU node, make sure your partition is set to "gpu"
+If you want a GPU node, make sure your partition is set to "gpu." 
 
 To start tensorboard in a specific directory (careful here and not recommended, as is not password protected):
 
@@ -89,6 +88,8 @@ If the sbatch job is still running, but your port forwarding stopped (e.g. if
 your computer went to sleep), you can resume with:
 
 `bash resume.sh jupyter`
+
+If you want to modify the partition flag to have a different gpu setup (other than `--partition gpu --gres gpu:1`) then you should set this **entire** string for the partition variable.
 
 ## Debugging
 
