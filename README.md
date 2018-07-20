@@ -9,9 +9,9 @@ Useful for jupyter notebook and tensorboard, amongst other things.
 ## Setup
 For interested users, a few tutorials are provided:
 
- - [sherlock jupyter](https://vsoch.github.io/lessons/sherlock-jupyter/).
- - [sherlock tensorflow](https://vsoch.github.io/lessons/sherlock-tensorflow/).
- - [sherlock singularity jupyter](https://vsoch.github.io/lessons/sherlock-tensorflow#singularity)
+ - [sherlock jupyter](https://vsoch.github.io/lessons/sherlock-jupyter/) 
+ - [sherlock tensorflow](https://vsoch.github.io/lessons/jupyter-tensorflow/)
+ - [sherlock singularity jupyter](https://vsoch.github.io/lessons/sherlock-singularity)
 
 Brief instructions are also documented in this README. Note that if you use a Singularity container,
 you don't need to set up a password on Sherlock (it will be generated for you on the fly).
