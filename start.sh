@@ -118,6 +118,9 @@ sleep 5
 echo "== Connecting to notebook =="
 
 # Print logs for the user, in case needed
+echo "== View Logs Like This =="
+echo "ssh sherlock cat $SHERLOCK_HOME/forward-util/${NAME}.out"
+echo "ssh sherlock cat $SHERLOCK_HOME/forward-util/${NAME}.err"
 ssh sherlock cat $SHERLOCK_HOME/forward-util/${NAME}.out
 ssh sherlock cat $SHERLOCK_HOME/forward-util/${NAME}.err
 echo "Open your browser to http://localhost:$PORT"
