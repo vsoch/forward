@@ -110,9 +110,14 @@ fi
 
 echo "notebook running on $MACHINE"
 echo "== Setting up port forwarding =="
+sleep 5
 echo "ssh -L $PORT:localhost:$PORT sherlock ssh -L $PORT:localhost:$PORT -N $MACHINE &"
 ssh -L $PORT:localhost:$PORT sherlock ssh -L $PORT:localhost:$PORT -N "$MACHINE" &
 
 sleep 5
 echo "== Connecting to notebook =="
+
+# Print logs for the user, in case needed
+ssh sherlock cat $SHERLOCK_HOME/forward-util/${NAME}.out
+ssh sherlock cat $SHERLOCK_HOME/forward-util/${NAME}.err
 echo "Open your browser to http://localhost:$PORT"

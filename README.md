@@ -7,7 +7,14 @@ Forward sets up an sbatch script on sherlock and port forwards it back to your l
 Useful for jupyter notebook and tensorboard, amongst other things.
 
 ## Setup
-For interested users, a [tutorial is provided](https://vsoch.github.io/lessons/sherlock-jupyter/). Instructions are also documented in this README.
+For interested users, a few tutorials are provided:
+
+ - [sherlock jupyter](https://vsoch.github.io/lessons/sherlock-jupyter/).
+ - [sherlock tensorflow](https://vsoch.github.io/lessons/sherlock-tensorflow/).
+ - [sherlock singularity jupyter](https://vsoch.github.io/lessons/sherlock-tensorflow#singularity)
+
+Brief instructions are also documented in this README. Note that if you use a Singularity container,
+you don't need to set up a password on Sherlock (it will be generated for you on the fly).
 
 ### Clone the Repository
 Clone this repository to your local machine.
@@ -76,6 +83,18 @@ To start a jupyter notebook with tensorflow in a specific directory:
 
 If you want a GPU node, make sure your partition is set to "gpu." 
 
+To start a jupyter notebook (via a Singularity container!) in a specific directory:
+
+`bash start.sh singularity-jupyter /path/to/dir`
+
+Want to create your own Singularity jupyter container? Use [repo2docker](https://www.github.com/jupyter/repo2docker) and then specify the container URI at the end:
+
+`bash start.sh singularity.jupyter /path/to/dir <container>`
+
+You can also run a general singularity container!
+
+`bash start.sh singularity /path/to/dir <container>`
+
 To start tensorboard in a specific directory (careful here and not recommended, as is not password protected):
 
 `bash start.sh start /path/to/dir`
@@ -92,6 +111,7 @@ your computer went to sleep), you can resume with:
 If you want to modify the partition flag to have a different gpu setup (other than `--partition gpu --gres gpu:1`) then you should set this **entire** string for the partition variable.
 
 ## Debugging
+Along with some good debugging notes [here](https://vsoch.github.io/lessons/jupyter-tensorflow#debugging), common errors are below.
 
 ### Connection refused after start.sh finished
 
