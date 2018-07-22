@@ -13,6 +13,7 @@ represented by the pull requests that fixed them. Critical items to know are:
  - changed behaviour (recipe sections work differently)
 
 ## [master](https://github.com/drorlab/forward/tree/master) (master)
+ - adding Singularity, tensorflow jupyter examples [@vsoch 7-22-2018]
  - adding CONTRIBUTORS, CONTRIBUTING, LICENSE, CHANGELOG [@vsoch 7-9-2018]
  - using exponential backoff to get node, to not spam login servers
  - adding initial check if session exists, and advising user to end or resume
