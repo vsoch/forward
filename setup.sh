@@ -26,6 +26,8 @@ echo
 read -p "Browser to use (default: /Applications/Safari.app/) > "  BROWSER
 BROWSER=${BROWSER:-"/Applications/Safari.app/"}
 
+/bin/bash
+
 MEM=20G
 
 TIME=8:00:00
