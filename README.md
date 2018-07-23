@@ -109,7 +109,6 @@ your computer went to sleep), you can resume with:
 
 `bash resume.sh jupyter`
 
-
 ## Debugging
 Along with some good debugging notes [here](https://vsoch.github.io/lessons/jupyter-tensorflow#debugging), common errors are below.
 
