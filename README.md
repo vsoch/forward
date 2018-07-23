@@ -29,6 +29,7 @@ You can always edit params.sh later to change these configuration options.
 
  - **PARTITION** If you intend to use a GPU (e.g., [sbatches/py2-tensorflow.sbatch](sbatches/py2-tensorflow.sbatch) the name of the PARTITION variable should be "gpu."
 
+If you want to modify the partition flag to have a different gpu setup (other than `--partition gpu --gres gpu:1`) then you should set this **entire** string for the partition variable.
 
 ### SSH config
 
@@ -107,8 +108,6 @@ If the sbatch job is still running, but your port forwarding stopped (e.g. if
 your computer went to sleep), you can resume with:
 
 `bash resume.sh jupyter`
-
-If you want to modify the partition flag to have a different gpu setup (other than `--partition gpu --gres gpu:1`) then you should set this **entire** string for the partition variable.
 
 ## Debugging
 Along with some good debugging notes [here](https://vsoch.github.io/lessons/jupyter-tensorflow#debugging), common errors are below.
