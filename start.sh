@@ -36,7 +36,7 @@ fi
 # This command will return empty (not defined) if nothing running
 
 echo "== Checking for previous notebook =="
-PREVIOUS=`ssh sherlock squeue --name=$NAME --user=$USERNAME -o "%R" -h`
+PREVIOUS=`ssh ${RESOURCE} squeue --name=$NAME --user=$USERNAME -o "%R" -h`
 if [ -z "$PREVIOUS" -a "${PREVIOUS+xxx}" = "xxx" ]; 
   then
       echo "No existing ${NAME} jobs found, continuing..."
@@ -47,11 +47,11 @@ if [ -z "$PREVIOUS" -a "${PREVIOUS+xxx}" = "xxx" ];
 fi
 
 echo "== Getting destination directory =="
-SHERLOCK_HOME=`ssh sherlock pwd`
-ssh sherlock mkdir -p $SHERLOCK_HOME/forward-util
+${RESOURCE}_HOME=`ssh ${RESOURCE} pwd`
+ssh ${RESOURCE} mkdir -p $RESOURCE_HOME/forward-util
 
 echo "== Uploading sbatch script =="
-scp sbatches/$SBATCH sherlock:$SHERLOCK_HOME/forward-util/
+scp sbatches/$SBATCH sherlock:$RESOURCE_HOME/forward-util/
 
 # Give them one gpu :)
 if [ "${PARTITION}" == "gpu" ];
@@ -62,14 +62,14 @@ if [ "${PARTITION}" == "gpu" ];
 
 echo "== Submitting sbatch =="
 
-command="sherlock sbatch
+command="${RESOURCE} sbatch
     --job-name=$NAME
     --partition=$PARTITION
-    --output=$SHERLOCK_HOME/forward-util/$NAME.out
-    --error=$SHERLOCK_HOME/forward-util/$NAME.err
+    --output=$RESOURCE_HOME/forward-util/$NAME.out
+    --error=$RESOURCE_HOME/forward-util/$NAME.err
     --mem=$MEM
     --time=$TIME
-    $SHERLOCK_HOME/forward-util/$SBATCH $PORT \"${@:2}\""
+    $RESOURCE_HOME/forward-util/$SBATCH $PORT \"${@:2}\""
 
 echo ${command}
 ssh ${command}
@@ -81,7 +81,7 @@ ALLOCATED="no"
 while [[ $ALLOCATED == "no" ]]
   do
                                                                   # nodelist
-    MACHINE=`ssh sherlock squeue --name=$NAME --user=$USERNAME -o "%N" -h`
+    MACHINE=`ssh ${RESOURCE} squeue --name=$NAME --user=$USERNAME -o "%N" -h`
     
     if [[ "$MACHINE" != "" ]]
       then
@@ -98,7 +98,7 @@ while [[ $ALLOCATED == "no" ]]
   done
 
 echo $MACHINE
-MACHINE="`ssh sherlock squeue --name=$NAME --user=$USERNAME -o "%R" -h`"
+MACHINE="`ssh ${RESOURCE} squeue --name=$NAME --user=$USERNAME -o "%R" -h`"
 echo $MACHINE
 
 # If we didn't get a node...
@@ -111,16 +111,16 @@ fi
 echo "notebook running on $MACHINE"
 echo "== Setting up port forwarding =="
 sleep 5
-echo "ssh -L $PORT:localhost:$PORT sherlock ssh -L $PORT:localhost:$PORT -N $MACHINE &"
-ssh -L $PORT:localhost:$PORT sherlock ssh -L $PORT:localhost:$PORT -N "$MACHINE" &
+echo "ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N $MACHINE &"
+ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N "$MACHINE" &
 
 sleep 5
 echo "== Connecting to notebook =="
 
 # Print logs for the user, in case needed
 echo "== View Logs Like This =="
-echo "ssh sherlock cat $SHERLOCK_HOME/forward-util/${NAME}.out"
-echo "ssh sherlock cat $SHERLOCK_HOME/forward-util/${NAME}.err"
-ssh sherlock cat $SHERLOCK_HOME/forward-util/${NAME}.out
-ssh sherlock cat $SHERLOCK_HOME/forward-util/${NAME}.err
+echo "ssh ${RESOURCE} cat $RESOURCE_HOME/forward-util/${NAME}.out"
+echo "ssh ${RESOURCE} cat $RESOURCE_HOME/forward-util/${NAME}.err"
+ssh ${RESOURCE} cat $RESOURCE_HOME/forward-util/${NAME}.out
+ssh ${RESOURCE} cat $RESOURCE_HOME/forward-util/${NAME}.err
 echo "Open your browser to http://localhost:$PORT"

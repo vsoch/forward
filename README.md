@@ -2,7 +2,7 @@
 
 ## What is this?
 
-Forward sets up an sbatch script on sherlock and port forwards it back to your local machine! 
+Forward sets up an sbatch script on your cluster resource and port forwards it back to your local machine! 
 
 Useful for jupyter notebook and tensorboard, amongst other things.
 
@@ -13,8 +13,7 @@ For interested users, a few tutorials are provided:
  - [sherlock tensorflow](https://vsoch.github.io/lessons/jupyter-tensorflow/)
  - [sherlock singularity jupyter](https://vsoch.github.io/lessons/sherlock-singularity)
 
-Brief instructions are also documented in this README. Note that if you use a Singularity container,
-you don't need to set up a password on Sherlock (it will be generated for you on the fly).
+Brief instructions are also documented in this README.
 
 ### Clone the Repository
 Clone this repository to your local machine.
@@ -27,13 +26,14 @@ You can always edit params.sh later to change these configuration options.
 
 #### Parameters
 
+ - **RESOURCE** should refer to an identifier for your cluster resource that will be recorded in your ssh configuration, and then referenced in the scripts to interact with the resource (e.g., `ssh sherlock`).
  - **PARTITION** If you intend to use a GPU (e.g., [sbatches/py2-tensorflow.sbatch](sbatches/py2-tensorflow.sbatch) the name of the PARTITION variable should be "gpu."
 
 If you want to modify the partition flag to have a different gpu setup (other than `--partition gpu --gres gpu:1`) then you should set this **entire** string for the partition variable.
 
 ### SSH config
 
-You will also need to at the minimum configure your ssh to recognize sherlock as
+You will also need to at the minimum configure your ssh to recognize your cluster (e.g., sherlock) as
 a valid host.  We have provided a [hosts folder](hosts)  for helper scripts that will generate
 recommended ssh configuration snippets to put in your `~/.ssh/config` file. Based
 on the name of the folder, you can intuit that the configuration depends on the cluster
