@@ -3,8 +3,14 @@
 ## What is this?
 
 Forward sets up an sbatch script on your cluster resource and port forwards it back to your local machine! 
-
 Useful for jupyter notebook and tensorboard, amongst other things.
+
+ - **start.sh** is intended for submitting a job and setting up ssh forwarding
+ - **start-node.sh** will submit the job and give you a command to ssh to the node, without port forwarding
+
+The folder [sbatches](sbatches) contains scripts, organized by cluster resource, that are intended
+for use and submission. It's up to you to decide if you want a port forwarded (e.g., for a jupyter notebook)
+or just an instruction for how to connect to a running node with your application.
 
 ## Setup
 For interested users, a few tutorials are provided:
@@ -65,7 +71,13 @@ One downside is that you will be foregoing sherlock's load
 balancing since you need to be connecting to the same login machine at each
 step.
 
-### Notebook password
+# Notebooks
+Notebooks have associated sbatch scripts that are intended to start a jupyter (or similar)
+notebook, and then forward the port back to your machine. If you just want to submit a job,
+(without port forwarding) see [the job submission](#job-submission) section. For 
+notebook job submission, you will want to use the [start.sh](start.sh) script.
+
+## Notebook password
 
 If you have not set up notebook authentication before, you will need to set a
 password via `jupyter notebook password` on your cluster resource.  
@@ -109,7 +121,46 @@ your computer went to sleep), you can resume with:
 
 `bash resume.sh jupyter`
 
-## Debugging
+# Job Submission
+Job submission can mean executing a command to a container, running a container, or 
+writing your own sbatch script (and submitting from your local machine). For 
+standard job submission, you will want to use the [start-node.sh](start-node.sh) script.
+
+## Usage
+
+Run a Singularity container that already exists on your resource (recommended)
+
+```bash
+bash start-node.sh singularity-run /scratch/users/vsochat/share/pytorch-dev.simg
+```
+
+Execute a custom command to the same Singularity container
+
+```bash
+bash start-node.sh singularity-exec /scratch/users/vsochat/share/pytorch-dev.simg echo "Hello World"
+```
+
+Run a Singularity container from a url, `docker://ubuntu`
+
+```bash
+bash start-node.sh singularity-run docker://ubuntu
+```
+
+Execute a custom command to the same container
+
+```bash
+bash start-node.sh singularity-exec docker://ubuntu echo "Hello World"
+```
+
+Execute your own custom sbatch script
+
+```bash
+cp myscript.job sbatches/
+bash start-node.sh myscript
+```
+
+# Debugging
+
 Along with some good debugging notes [here](https://vsoch.github.io/lessons/jupyter-tensorflow#debugging), common errors are below.
 
 ### Connection refused after start.sh finished

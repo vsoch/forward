@@ -1,9 +1,7 @@
 #!/bin/bash
 #
-# Starts a remote sbatch jobs and sets up correct port forwarding.
-# Sample usage: bash start.sh jupyter
-#               bash start.sh jupyter /home/users/raphtown
-#               bash start.sh tensorboard /home/users/raphtown
+# Starts a remote sbatch jobs without port forwarding.
+# Sample usage: bash start-node.sh singularity docker://ubuntu
 
 if [ ! -f params.sh ]
 then
@@ -12,12 +10,6 @@ then
 fi
 . params.sh
 
-if [ "$#" -eq 0 ]
-then
-    echo "Need to give name of sbatch job to run!"
-    exit
-fi
-
 if [ ! -f helpers.sh ]
 then
     echo "Cannot find helpers.sh script!"
@@ -25,11 +17,19 @@ then
 fi
 . helpers.sh
 
+if [ "$#" -eq 0 ]
+then
+    echo "Need to give name of sbatch job to run!"
+    exit
+fi
+
 NAME="${1:-}"
 
 # The user could request either <resource>/<script>.sbatch or
 #                               <name>.sbatch
 SBATCH="$NAME.sbatch"
+
+# Exponential backoff Configuration
 
 # set FORWARD_SCRIPT and FOUND
 set_forward_script
@@ -42,7 +42,7 @@ ssh ${RESOURCE} mkdir -p $RESOURCE_HOME/forward-util
 
 echo
 echo "== Uploading sbatch script =="
-scp $FOUND sherlock:$RESOURCE_HOME/forward-util/
+scp $FORWARD_SCRIPT ${RESOURCE}:$RESOURCE_HOME/forward-util/
 
 # adjust PARTITION if necessary
 set_partition
@@ -62,20 +62,20 @@ command="${RESOURCE} sbatch
 echo ${command}
 ssh ${command}
 
-# Tell the user how to debug before trying
+# Tell the user how to view error/output logs
 instruction_get_logs
 
 # Wait for the node allocation, get identifier
 get_machine
-echo "notebook running on $MACHINE"
 
-setup_port_forwarding
+echo "job is running on $MACHINE"
 
 sleep 5
 echo
-echo "== Connecting to notebook =="
+echo "== Connecting to resource =="
 
 # Print logs for the user, in case needed
-ssh ${RESOURCE} cat $RESOURCE_HOME/forward-util/${NAME}.out
-ssh ${RESOURCE} cat $RESOURCE_HOME/forward-util/${NAME}.err
-echo "Open your browser to http://localhost:$PORT"
+print_logs
+
+echo "Connect to machine:"
+echo "ssh -t ${RESOURCE} ssh ${USERNAME}@${MACHINE}"
