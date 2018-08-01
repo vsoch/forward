@@ -6,12 +6,20 @@
 echo
 read -p "Farmshare username > "  USERNAME
 
+# Get a login node to use.
+# The current FarmShare generation uses "rice.stanford.edu", which is DNS
+# load-balanced.  "rice.stanford.edu" is currently an alias to
+# "rice.best.stanford.edu", and returns a CNAME to the best login node to use.
+# WARNING: If the load-balancing method, or the name, ever changes; this will
+# need to be updated.
+FARMSHARE_HOST=$(dig +short +recurse rice.best.stanford.edu cname)
+
 # Randomly select login node from 1..4
 LOGIN_NODE=$((1 + RANDOM % 9))
 
 echo "Host farmshare
     User ${USERNAME}
-    Hostname rice0${LOGIN_NODE}.stanford.edu
+    Hostname ${FARMSHARE_HOST}
     GSSAPIDelegateCredentials yes
     GSSAPIAuthentication yes
     ControlMaster auto
