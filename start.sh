@@ -19,6 +19,9 @@ then
 fi
 
 NAME="${1:-}"
+
+# The user could request either <resource>/<script>.sbatch or
+#                               <name>.sbatch
 SBATCH="$NAME.sbatch"
 
 # Exponential backoff Configuration
@@ -26,9 +29,33 @@ SBATCH="$NAME.sbatch"
 TIMEOUT=${TIMEOUT-1}
 ATTEMPT=0
 
-if [ ! -f "sbatches/$SBATCH" ]
-then
-    echo "$SBATCH does not exist!"
+# Will be changed to script name, if found
+
+FOUND="no"
+echo "== Finding Script =="
+
+declare -a FORWARD_SCRIPTS=("sbatches/${RESOURCE}/$SBATCH" 
+                            "sbatches/$SBATCH"
+                            "${RESOURCE}/$SBATCH" 
+                            "$SBATCH");
+
+for FORWARD_SCRIPT in "${FORWARD_SCRIPTS[@]}"
+do
+    echo "Looking for ${FORWARD_SCRIPT}";
+    if [ -f "${FORWARD_SCRIPT}" ]
+        then
+        FOUND="${FORWARD_SCRIPT}"
+        echo "Script      ${FORWARD_SCRIPT}";
+        break
+    fi
+done
+echo
+
+if [ "${FOUND}" == "no" ]
+then    
+    echo "sbatch script not found!!";
+    echo "Make sure \$RESOURCE is defined" ;
+    echo "and that your sbatch script exists in the sbatches folder.";
     exit
 fi
 
@@ -46,12 +73,14 @@ if [ -z "$PREVIOUS" -a "${PREVIOUS+xxx}" = "xxx" ];
       exit 1
 fi
 
+echo
 echo "== Getting destination directory =="
-${RESOURCE}_HOME=`ssh ${RESOURCE} pwd`
+RESOURCE_HOME=`ssh ${RESOURCE} pwd`
 ssh ${RESOURCE} mkdir -p $RESOURCE_HOME/forward-util
 
+echo
 echo "== Uploading sbatch script =="
-scp sbatches/$SBATCH sherlock:$RESOURCE_HOME/forward-util/
+scp $FOUND sherlock:$RESOURCE_HOME/forward-util/
 
 # Give them one gpu :)
 if [ "${PARTITION}" == "gpu" ];
@@ -60,6 +89,7 @@ if [ "${PARTITION}" == "gpu" ];
       PARTITION="${PARTITION} --gres gpu:1"
   fi
 
+echo
 echo "== Submitting sbatch =="
 
 command="${RESOURCE} sbatch
@@ -74,6 +104,14 @@ command="${RESOURCE} sbatch
 echo ${command}
 ssh ${command}
 
+# Tell the user how to debug before trying
+
+echo
+echo "== View logs in separate terminal =="
+echo "ssh ${RESOURCE} cat $RESOURCE_HOME/forward-util/${NAME}.out"
+echo "ssh ${RESOURCE} cat $RESOURCE_HOME/forward-util/${NAME}.err"
+
+echo
 echo "== Waiting for job to start, using exponential backoff =="
 MACHINE=""
 
@@ -109,18 +147,18 @@ if [[ "$MACHINE" != "sh"* ]]
 fi
 
 echo "notebook running on $MACHINE"
+
+echo
 echo "== Setting up port forwarding =="
 sleep 5
 echo "ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N $MACHINE &"
 ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N "$MACHINE" &
 
 sleep 5
+echo
 echo "== Connecting to notebook =="
 
 # Print logs for the user, in case needed
-echo "== View Logs Like This =="
-echo "ssh ${RESOURCE} cat $RESOURCE_HOME/forward-util/${NAME}.out"
-echo "ssh ${RESOURCE} cat $RESOURCE_HOME/forward-util/${NAME}.err"
 ssh ${RESOURCE} cat $RESOURCE_HOME/forward-util/${NAME}.out
 ssh ${RESOURCE} cat $RESOURCE_HOME/forward-util/${NAME}.err
 echo "Open your browser to http://localhost:$PORT"

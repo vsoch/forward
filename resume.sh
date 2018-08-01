@@ -10,5 +10,7 @@ then
 fi
 source params.sh
 
+# The user is required to specify port
+
 MACHINE=`ssh ${RESOURCE} squeue --name=$NAME --user=$USERNAME -o "%N" -h`
 ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N $MACHINE &
