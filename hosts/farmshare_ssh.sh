@@ -14,9 +14,6 @@ read -p "Farmshare username > "  USERNAME
 # need to be updated.
 FARMSHARE_HOST=$(dig +short +recurse rice.best.stanford.edu cname)
 
-# Randomly select login node from 1..4
-LOGIN_NODE=$((1 + RANDOM % 9))
-
 echo "Host farmshare
     User ${USERNAME}
     Hostname ${FARMSHARE_HOST}
