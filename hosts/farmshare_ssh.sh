@@ -6,17 +6,13 @@
 echo
 read -p "Farmshare username > "  USERNAME
 
-# Get a login node to use.
-# The current FarmShare generation uses "rice.stanford.edu", which is DNS
-# load-balanced.  "rice.stanford.edu" is currently an alias to
-# "rice.best.stanford.edu", and returns a CNAME to the best login node to use.
-# WARNING: If the load-balancing method, or the name, ever changes; this will
-# need to be updated.
-FARMSHARE_HOST=$(dig +short +recurse rice.best.stanford.edu cname)
+# The FarmShare login node is (as of 2018) rice.stanford.edu.  That is a
+# load-balanced DNS.  The use of ControlMaster will ensure that multiple
+# connections to rice.stanford.edu all go to the same host.
 
 echo "Host farmshare
     User ${USERNAME}
-    Hostname ${FARMSHARE_HOST}
+    Hostname rice.stanford.edu
     GSSAPIDelegateCredentials yes
     GSSAPIAuthentication yes
     ControlMaster auto
