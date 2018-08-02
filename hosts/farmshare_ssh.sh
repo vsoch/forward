@@ -6,12 +6,13 @@
 echo
 read -p "Farmshare username > "  USERNAME
 
-# Randomly select login node from 1..4
-LOGIN_NODE=$((1 + RANDOM % 9))
+# The FarmShare login node is (as of 2018) rice.stanford.edu.  That is a
+# load-balanced DNS.  The use of ControlMaster will ensure that multiple
+# connections to rice.stanford.edu all go to the same host.
 
 echo "Host farmshare
     User ${USERNAME}
-    Hostname rice0${LOGIN_NODE}.stanford.edu
+    Hostname rice.stanford.edu
     GSSAPIDelegateCredentials yes
     GSSAPIAuthentication yes
     ControlMaster auto
