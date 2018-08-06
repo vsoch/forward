@@ -2,8 +2,15 @@
 #
 # Sets up parameters for use with other scripts.  Should be run once.
 # Sample usage: bash setup.sh
+
+echo "First, choose the resource identifier that specifies your cluster resoure. We
+will set up this name in your ssh configuration, and use it to reference the resource (sherlock)."
 echo
-read -p "Sherlock username > "  USERNAME
+read -p "Resource identifier (default: sherlock) > "  RESOURCE
+RESOURCE=${RESOURCE:-sherlock}
+
+echo
+read -p "${RESOURCE} username > "  USERNAME
 
 echo
 echo "Next, pick a port to use.  If someone else is port forwarding using that
@@ -13,24 +20,20 @@ echo
 read -p "Port to use > "  PORT
 
 echo
-echo "Next, pick the sherlock partition on which you will be running your
-notebooks.  If your PI has purchased dedicated hardware on sherlock, you can use
+echo "Next, pick the ${RESOURCE} partition on which you will be running your
+notebooks.  If your PI has purchased dedicated hardware on ${RESOURCE}, you can use
 that partition.  Otherwise, leave blank to use the default partition (normal)."
 echo
-read -p "Sherlock partition (default: normal) > "  PARTITION
+read -p "${RESOURCE} partition (default: normal) > "  PARTITION
 PARTITION=${PARTITION:-normal}
 
 echo
-echo "Next, pick the path to the browser you wish to use.  Will default to Safari."
-echo
-read -p "Browser to use (default: /Applications/Safari.app/) > "  BROWSER
-BROWSER=${BROWSER:-"/Applications/Safari.app/"}
 
 MEM=20G
 
 TIME=8:00:00
 
-for var in USERNAME PORT PARTITION BROWSER MEM TIME
+for var in USERNAME PORT PARTITION RESOURCE MEM TIME
 do
     echo "$var="'"'"$(eval echo '$'"$var")"'"'
 done >> params.sh
