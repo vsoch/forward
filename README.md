@@ -135,7 +135,31 @@ re-prompt for your password in the terminal session, you should fix the issue.
 $ ssh sherlock pwd
 ```
 
-## I ended a script, but can't start
+### slurm_load_jobs error: Socket timed out on send/recv operation 
+
+[This error](https://www.rc.fas.harvard.edu/resources/faq/slurm-errors-socket-timed-out) is basically
+saying something to the effect of "slurm is busy, try again later." It's not an issue with submitting
+the job, but rather a ping to slurm to perform the check. In the case that the next ping continues, you should be ok. However, if the script is terminate, while you can't control the "busyness" of slurm, you **can**
+control how likely it is to be allocated a node, or the frequency of checking. Thus, you can do either of the
+following to mitigate this issue:
+
+**choose a partition that is more readily available**
+
+In your params.sh file, choose a partition that is likely to be allocated sooner, thus reducing the 
+queries to slurm, and the chance of the error.
+
+**offset the checks by changing the timeout between attempts**
+
+The script looks for an exported variable, `TIMEOUT` and sets it to be 1 (1 second) if
+not defined. Thus, to change the timeout, you can export this variable:
+
+```bash
+export TIMEOUT=3
+```
+
+While the forward tool cannot control the busyness of slurm, these two strategies should help a bit.
+
+### I ended a script, but can't start
 
 As you would kill a job on Sherlock and see some delay for the node to come down, the
 same can be try here! Try waiting 20-30 seconds to give the node time to exit, and try again.
