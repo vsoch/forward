@@ -42,7 +42,7 @@ ssh ${RESOURCE} mkdir -p $RESOURCE_HOME/forward-util
 
 echo
 echo "== Uploading sbatch script =="
-scp $FOUND sherlock:$RESOURCE_HOME/forward-util/
+scp $FORWARD_SCRIPT ${RESOURCE}:$RESOURCE_HOME/forward-util/
 
 # adjust PARTITION if necessary
 set_partition
@@ -50,14 +50,15 @@ echo
 
 echo "== Submitting sbatch =="
 
+SBATCH_NAME=$(basename $SBATCH)
 command="${RESOURCE} sbatch
     --job-name=$NAME
     --partition=$PARTITION
-    --output=$RESOURCE_HOME/forward-util/$NAME.out
-    --error=$RESOURCE_HOME/forward-util/$NAME.err
+    --output=$RESOURCE_HOME/forward-util/$SBATCH_NAME.out
+    --error=$RESOURCE_HOME/forward-util/$SBATCH_NAME.err
     --mem=$MEM
     --time=$TIME
-    $RESOURCE_HOME/forward-util/$SBATCH $PORT \"${@:2}\""
+    $RESOURCE_HOME/forward-util/$SBATCH_NAME $PORT \"${@:2}\""
 
 echo ${command}
 ssh ${command}
@@ -76,6 +77,6 @@ echo
 echo "== Connecting to notebook =="
 
 # Print logs for the user, in case needed
-ssh ${RESOURCE} cat $RESOURCE_HOME/forward-util/${NAME}.out
-ssh ${RESOURCE} cat $RESOURCE_HOME/forward-util/${NAME}.err
+print_logs
+
 echo "Open your browser to http://localhost:$PORT"

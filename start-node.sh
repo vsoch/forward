@@ -42,7 +42,7 @@ ssh ${RESOURCE} mkdir -p $RESOURCE_HOME/forward-util
 
 echo
 echo "== Uploading sbatch script =="
-scp $FORWARD_SCRIPT ${RESOURCE}:$RESOURCE_HOME/forward-util/
+scp "${FORWARD_SCRIPT}" "${RESOURCE}:$RESOURCE_HOME/forward-util/"
 
 # adjust PARTITION if necessary
 set_partition
@@ -50,6 +50,7 @@ echo
 
 echo "== Submitting sbatch =="
 
+SBATCH_NAME=$(basename $SBATCH)
 command="${RESOURCE} sbatch
     --job-name=$NAME
     --partition=$PARTITION
@@ -57,7 +58,7 @@ command="${RESOURCE} sbatch
     --error=$RESOURCE_HOME/forward-util/$NAME.err
     --mem=$MEM
     --time=$TIME
-    $RESOURCE_HOME/forward-util/$SBATCH $PORT \"${@:2}\""
+    $RESOURCE_HOME/forward-util/$SBATCH_NAME $PORT \"${@:2}\""
 
 echo ${command}
 ssh ${command}

@@ -117,14 +117,14 @@ function get_machine() {
 function instruction_get_logs() {
     echo
     echo "== View logs in separate terminal =="
-    echo "ssh ${RESOURCE} cat $RESOURCE_HOME/forward-util/${NAME}.out"
-    echo "ssh ${RESOURCE} cat $RESOURCE_HOME/forward-util/${NAME}.err"
+    echo "ssh ${RESOURCE} cat $RESOURCE_HOME/forward-util/${SBATCH_NAME}.out"
+    echo "ssh ${RESOURCE} cat $RESOURCE_HOME/forward-util/${SBATCH_NAME}.err"
 }
 
 function print_logs() {
 
-    ssh ${RESOURCE} cat $RESOURCE_HOME/forward-util/${NAME}.out
-    ssh ${RESOURCE} cat $RESOURCE_HOME/forward-util/${NAME}.err
+    ssh ${RESOURCE} cat $RESOURCE_HOME/forward-util/${SBATCH_NAME}.out
+    ssh ${RESOURCE} cat $RESOURCE_HOME/forward-util/${SBATCH_NAME}.err
 
 }
 

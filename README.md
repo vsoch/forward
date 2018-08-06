@@ -128,36 +128,34 @@ standard job submission, you will want to use the [start-node.sh](start-node.sh)
 
 ## Usage
 
-Run a Singularity container that already exists on your resource (recommended)
-
 ```bash
+# Run a Singularity container that already exists on your resource (recommended)
 bash start-node.sh singularity-run /scratch/users/vsochat/share/pytorch-dev.simg
-```
 
-Execute a custom command to the same Singularity container
-
-```bash
+# Execute a custom command to the same Singularity container
 bash start-node.sh singularity-exec /scratch/users/vsochat/share/pytorch-dev.simg echo "Hello World"
-```
 
-Run a Singularity container from a url, `docker://ubuntu`
-
-```bash
+# Run a Singularity container from a url, `docker://ubuntu`
 bash start-node.sh singularity-run docker://ubuntu
-```
 
-Execute a custom command to the same container
-
-```bash
+# Execute a custom command to the same container
 bash start-node.sh singularity-exec docker://ubuntu echo "Hello World"
-```
 
-Execute your own custom sbatch script
-
-```bash
+# Execute your own custom sbatch script
 cp myscript.job sbatches/
 bash start-node.sh myscript
 ```
+
+As a service for Stanford users, @vsoch provides a [containershare](https://vsoch.github.io/containershare)
+of ready to go containers to use on Sherlock! The majority of these deploy interactive notebooks, 
+however can also be run without (use start-node.sh instead of start.sh).
+
+```bash
+# Run a containershare container with a notebook
+bash start.sh sherlock/containershare-notebook docker://vanessa/repo2docker-julia
+```
+
+If you would like to request a custom notebook, please [reach out](https://www.github.com/vsoch/containershare/issues).
 
 # Debugging
 
