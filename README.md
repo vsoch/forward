@@ -84,47 +84,11 @@ password via `jupyter notebook password` on your cluster resource.
 Make sure to pick a secure password!
 
 
-## Usage
-
-To start a jupyter notebook in a specific directory:
-
-`bash start.sh jupyter /path/to/dir`
-
-To start a jupyter notebook with tensorflow in a specific directory:
-
-`bash start.sh py2-tensorflow /path/to/dir`
-
-If you want a GPU node, make sure your partition is set to "gpu." 
-
-To start a jupyter notebook (via a Singularity container!) in a specific directory:
-
-`bash start.sh singularity-jupyter /path/to/dir`
-
-Want to create your own Singularity jupyter container? Use [repo2docker](https://www.github.com/jupyter/repo2docker) and then specify the container URI at the end:
-
-`bash start.sh singularity.jupyter /path/to/dir <container>`
-
-You can also run a general singularity container!
-
-`bash start.sh singularity /path/to/dir <container>`
-
-To start tensorboard in a specific directory (careful here and not recommended, as is not password protected):
-
-`bash start.sh start /path/to/dir`
-
-To stop the running jupyter notebook server:
-
-`bash end.sh jupyter`
-
-If the sbatch job is still running, but your port forwarding stopped (e.g. if
-your computer went to sleep), you can resume with:
-
-`bash resume.sh jupyter`
-
 # Job Submission
 Job submission can mean executing a command to a container, running a container, or 
 writing your own sbatch script (and submitting from your local machine). For 
 standard job submission, you will want to use the [start-node.sh](start-node.sh) script.
+For a notebook type job (anything with jupyter and 
 
 ## Usage
 
@@ -148,7 +112,7 @@ bash start-node.sh myscript
 
 As a service for Stanford users, @vsoch provides a [containershare](https://vsoch.github.io/containershare)
 of ready to go containers to use on Sherlock! The majority of these deploy interactive notebooks, 
-however can also be run without (use start-node.sh instead of start.sh).
+however can also be run without (use start-node.sh instead of [start.sh](start.sh)).
 
 ```bash
 # Run a containershare container with a notebook
@@ -156,6 +120,43 @@ bash start.sh sherlock/containershare-notebook docker://vanessa/repo2docker-juli
 ```
 
 If you would like to request a custom notebook, please [reach out](https://www.github.com/vsoch/containershare/issues).
+
+## Usage
+
+
+```bash
+# To start a jupyter notebook in a specific directory
+bash start.sh jupyter /path/to/dir
+
+# To start a jupyter notebook with tensorflow in a specific directory
+bash start.sh py2-tensorflow /path/to/dir
+
+# If you want a GPU node, make sure your partition is set to "gpu."
+# To start a jupyter notebook (via a Singularity container!) in a specific directory
+bash start.sh singularity-jupyter /path/to/dir
+```
+
+Want to create your own Singularity jupyter container? Use [repo2docker](https://www.github.com/jupyter/repo2docker) and then specify the container URI at the end:
+
+```bash
+bash start.sh singularity.jupyter /path/to/dir <container>
+
+# You can also run a general singularity container!
+bash start.sh singularity /path/to/dir <container>
+
+# To start tensorboard in a specific directory (careful here and not recommended, as is not password protected)
+bash start.sh start /path/to/dir
+
+# To stop the running jupyter notebook server
+bash end.sh jupyter
+```
+
+If the sbatch job is still running, but your port forwarding stopped (e.g. if
+your computer went to sleep), you can resume with:
+
+```bash
+bash resume.sh jupyter`
+```
 
 # Debugging
 
