@@ -2,9 +2,15 @@
 
 ## What is this?
 
-Forward sets up an sbatch script on sherlock and port forwards it back to your local machine! 
-
+Forward sets up an sbatch script on your cluster resource and port forwards it back to your local machine! 
 Useful for jupyter notebook and tensorboard, amongst other things.
+
+ - **start.sh** is intended for submitting a job and setting up ssh forwarding
+ - **start-node.sh** will submit the job and give you a command to ssh to the node, without port forwarding
+
+The folder [sbatches](sbatches) contains scripts, organized by cluster resource, that are intended
+for use and submission. It's up to you to decide if you want a port forwarded (e.g., for a jupyter notebook)
+or just an instruction for how to connect to a running node with your application.
 
 ## Setup
 For interested users, a few tutorials are provided:
@@ -13,8 +19,7 @@ For interested users, a few tutorials are provided:
  - [sherlock tensorflow](https://vsoch.github.io/lessons/jupyter-tensorflow/)
  - [sherlock singularity jupyter](https://vsoch.github.io/lessons/sherlock-singularity)
 
-Brief instructions are also documented in this README. Note that if you use a Singularity container,
-you don't need to set up a password on Sherlock (it will be generated for you on the fly).
+Brief instructions are also documented in this README.
 
 ### Clone the Repository
 Clone this repository to your local machine.
@@ -27,13 +32,14 @@ You can always edit params.sh later to change these configuration options.
 
 #### Parameters
 
+ - **RESOURCE** should refer to an identifier for your cluster resource that will be recorded in your ssh configuration, and then referenced in the scripts to interact with the resource (e.g., `ssh sherlock`).
  - **PARTITION** If you intend to use a GPU (e.g., [sbatches/py2-tensorflow.sbatch](sbatches/py2-tensorflow.sbatch) the name of the PARTITION variable should be "gpu."
 
 If you want to modify the partition flag to have a different gpu setup (other than `--partition gpu --gres gpu:1`) then you should set this **entire** string for the partition variable.
 
 ### SSH config
 
-You will also need to at the minimum configure your ssh to recognize sherlock as
+You will also need to at the minimum configure your ssh to recognize your cluster (e.g., sherlock) as
 a valid host.  We have provided a [hosts folder](hosts)  for helper scripts that will generate
 recommended ssh configuration snippets to put in your `~/.ssh/config` file. Based
 on the name of the folder, you can intuit that the configuration depends on the cluster
@@ -65,11 +71,17 @@ One downside is that you will be foregoing sherlock's load
 balancing since you need to be connecting to the same login machine at each
 step.
 
-### Notebook password
+# Notebooks
+Notebooks have associated sbatch scripts that are intended to start a jupyter (or similar)
+notebook, and then forward the port back to your machine. If you just want to submit a job,
+(without port forwarding) see [the job submission](#job-submission) section. For 
+notebook job submission, you will want to use the [start.sh](start.sh) script.
+
+## Notebook password
 
 If you have not set up notebook authentication before, you will need to set a
-password via `jupyter notebook password` on sherlock.  Make sure to pick a
-secure password!
+password via `jupyter notebook password` on your cluster resource.  
+Make sure to pick a secure password!
 
 
 ## Usage
@@ -109,7 +121,44 @@ your computer went to sleep), you can resume with:
 
 `bash resume.sh jupyter`
 
-## Debugging
+# Job Submission
+Job submission can mean executing a command to a container, running a container, or 
+writing your own sbatch script (and submitting from your local machine). For 
+standard job submission, you will want to use the [start-node.sh](start-node.sh) script.
+
+## Usage
+
+```bash
+# Run a Singularity container that already exists on your resource (recommended)
+bash start-node.sh singularity-run /scratch/users/vsochat/share/pytorch-dev.simg
+
+# Execute a custom command to the same Singularity container
+bash start-node.sh singularity-exec /scratch/users/vsochat/share/pytorch-dev.simg echo "Hello World"
+
+# Run a Singularity container from a url, `docker://ubuntu`
+bash start-node.sh singularity-run docker://ubuntu
+
+# Execute a custom command to the same container
+bash start-node.sh singularity-exec docker://ubuntu echo "Hello World"
+
+# Execute your own custom sbatch script
+cp myscript.job sbatches/
+bash start-node.sh myscript
+```
+
+As a service for Stanford users, @vsoch provides a [containershare](https://vsoch.github.io/containershare)
+of ready to go containers to use on Sherlock! The majority of these deploy interactive notebooks, 
+however can also be run without (use start-node.sh instead of start.sh).
+
+```bash
+# Run a containershare container with a notebook
+bash start.sh sherlock/containershare-notebook docker://vanessa/repo2docker-julia
+```
+
+If you would like to request a custom notebook, please [reach out](https://www.github.com/vsoch/containershare/issues).
+
+# Debugging
+
 Along with some good debugging notes [here](https://vsoch.github.io/lessons/jupyter-tensorflow#debugging), common errors are below.
 
 ### Connection refused after start.sh finished

@@ -7,7 +7,7 @@ echo
 read -p "Sherlock username > "  USERNAME
 
 # Randomly select login node from 1..4
-LOGIN_NODE=$((1 + RANDOM % 4))
+LOGIN_NODE=$((1 + RANDOM % 8))
 
 echo "Host sherlock
     User ${USERNAME}

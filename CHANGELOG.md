@@ -13,6 +13,8 @@ represented by the pull requests that fixed them. Critical items to know are:
  - changed behaviour (recipe sections work differently)
 
 ## [master](https://github.com/drorlab/forward/tree/master) (master)
+ - containershare notebooks script [@vsoch 8-6-2018]
+ - adding support for multiple hosts [@vsoch 7-31-2018]
  - adding Singularity, tensorflow jupyter examples [@vsoch 7-22-2018]
  - adding CONTRIBUTORS, CONTRIBUTING, LICENSE, CHANGELOG [@vsoch 7-9-2018]
  - using exponential backoff to get node, to not spam login servers
