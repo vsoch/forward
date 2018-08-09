@@ -112,7 +112,9 @@ bash start-node.sh myscript
 
 As a service for Stanford users, @vsoch provides a [containershare](https://vsoch.github.io/containershare)
 of ready to go containers to use on Sherlock! The majority of these deploy interactive notebooks, 
-however can also be run without (use start-node.sh instead of [start.sh](start.sh)).
+however can also be run without (use start-node.sh instead of [start.sh](start.sh)). If you
+want to build your own container for containershare (or request a container) see the
+[README](https://www.github.com/vsoch/containershare) in the repository that serves it.
 
 ```bash
 # Run a containershare container with a notebook
