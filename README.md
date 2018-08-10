@@ -17,7 +17,7 @@ Here we will provide some "tiny tutorials" to go along with helping to use the s
 are many possible use cases!
 
  - [Using sherlock/py3-jupyter](https://gist.github.com/vsoch/f2034e2ff768de7eb14d42fef92cc43e) and copying notebook first from your host to use a notebook module (python 3) on the Sherlock cluster at Stanford [Version 0.0.1](https://github.com/vsoch/forward/releases/tag/0.0.1).
- - [Using containershare with repo2docker-julia](https://vsoch.github.io/lessons/containershare) [Version 0.0.1](https://github.com/vsoch/forward/releases/tag/0.0.1)
+ - [Using containershare with repo2docker-julia](https://vsoch.github.io/lessons/containershare) a repo2docker-julia Singularity container deployed on Sherlock using [Version 0.0.1](https://github.com/vsoch/forward/releases/tag/0.0.1)
 
 ## Setup
 For interested users, a few tutorials are provided on the [Research Computing Lessons](https://vsoch.github.io/lessons) site.
