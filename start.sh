@@ -84,5 +84,5 @@ instruction_get_logs
 echo
 echo "== Instructions =="
 echo "1. Password, output, and error printed to this terminal? Look at logs (see instruction above)"
-echo "2. Browser: http://sh-02-21.int:56845/ -> http://localhost:56845/..."
+echo "2. Browser: http://sh-02-21.int:$PORT/ -> http://localhost:$PORT/..."
 echo "3. To end session: bash end.sh ${NAME}"

@@ -130,27 +130,30 @@ If you would like to request a custom notebook, please [reach out](https://www.g
 
 
 ```bash
-# To start a jupyter notebook in a specific directory
-bash start.sh jupyter /path/to/dir
+# To start a jupyter notebook in a specific directory ON the cluster resource
+bash start.sh jupyter <cluster-dir>
+
+# If you don't specify a path on the cluster, it defaults to your ${SCRATCH}
+bash start.sh jupyter /scratch/users/<username>
 
 # To start a jupyter notebook with tensorflow in a specific directory
-bash start.sh py2-tensorflow /path/to/dir
+bash start.sh py2-tensorflow <cluster-dir>
 
 # If you want a GPU node, make sure your partition is set to "gpu."
 # To start a jupyter notebook (via a Singularity container!) in a specific directory
-bash start.sh singularity-jupyter /path/to/dir
+bash start.sh singularity-jupyter <cluster-dir>
 ```
 
-Want to create your own Singularity jupyter container? Use [repo2docker](https://www.github.com/jupyter/repo2docker) and then specify the container URI at the end:
+Want to create your own Singularity jupyter container? Use [repo2docker](https://www.github.com/jupyter/repo2docker) and then specify the container URI at the end.
 
 ```bash
-bash start.sh singularity.jupyter /path/to/dir <container>
+bash start.sh singularity.jupyter <cluster-dir> <container>
 
 # You can also run a general singularity container!
-bash start.sh singularity /path/to/dir <container>
+bash start.sh singularity <cluster-dir> <container>
 
 # To start tensorboard in a specific directory (careful here and not recommended, as is not password protected)
-bash start.sh start /path/to/dir
+bash start.sh start <cluster-dir>
 
 # To stop the running jupyter notebook server
 bash end.sh jupyter
