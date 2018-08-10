@@ -1,9 +1,9 @@
 #!/bin/bash
 #
 # Starts a remote sbatch jobs and sets up correct port forwarding.
-# Sample usage: bash start.sh jupyter
-#               bash start.sh jupyter /home/users/raphtown
-#               bash start.sh tensorboard /home/users/raphtown
+# Sample usage: bash start.sh sherlock/singularity-jupyter 
+#               bash start.sh sherlock/singularity-jupyter /home/users/raphtown
+#               bash start.sh sherlock/singularity-jupyter /home/users/raphtown
 
 if [ ! -f params.sh ]
 then
@@ -51,7 +51,7 @@ echo
 echo "== Submitting sbatch =="
 
 SBATCH_NAME=$(basename $SBATCH)
-command="${RESOURCE} sbatch
+command="sbatch
     --job-name=$NAME
     --partition=$PARTITION
     --output=$RESOURCE_HOME/forward-util/$SBATCH_NAME.out
@@ -61,7 +61,7 @@ command="${RESOURCE} sbatch
     $RESOURCE_HOME/forward-util/$SBATCH_NAME $PORT \"${@:2}\""
 
 echo ${command}
-ssh ${command}
+ssh ${RESOURCE} ${command}
 
 # Tell the user how to debug before trying
 instruction_get_logs
@@ -72,11 +72,17 @@ echo "notebook running on $MACHINE"
 
 setup_port_forwarding
 
-sleep 5
-echo
+sleep 10
 echo "== Connecting to notebook =="
 
 # Print logs for the user, in case needed
 print_logs
 
-echo "Open your browser to http://localhost:$PORT"
+echo
+
+instruction_get_logs
+echo
+echo "== Instructions =="
+echo "1. Password, output, and error printed to this terminal? Look at logs (see instruction above)"
+echo "2. Browser: http://sh-02-21.int:56845/ -> http://localhost:56845/..."
+echo "3. To end session: bash end.sh ${NAME}"

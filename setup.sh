@@ -28,12 +28,22 @@ read -p "${RESOURCE} partition (default: normal) > "  PARTITION
 PARTITION=${PARTITION:-normal}
 
 echo
+SHARE="/scratch/users/vsochat/share"
+echo "A containershare (https://vsoch.github.io/containershare is a library of
+containers that are prebuilt for you, and provided on your cluster resource. if you
+are at Stanford, leave this to be the default. If not, ask your HPC administrator
+about setting one up, and direct them to https://www.github.com/vsoch/containershare."
+echo
+read -p "container shared folder (default for Stanford: ${SHARE}) > " CONTAINERSHARE
+CONTAINERSHARE=${CONTAINERSHARE:-${SHARE}}
+
+echo
 
 MEM=20G
 
 TIME=8:00:00
 
-for var in USERNAME PORT PARTITION RESOURCE MEM TIME
+for var in USERNAME PORT PARTITION RESOURCE MEM TIME CONTAINERSHARE
 do
     echo "$var="'"'"$(eval echo '$'"$var")"'"'
 done >> params.sh

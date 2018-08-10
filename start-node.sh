@@ -51,7 +51,7 @@ echo
 echo "== Submitting sbatch =="
 
 SBATCH_NAME=$(basename $SBATCH)
-command="${RESOURCE} sbatch
+command="sbatch
     --job-name=$NAME
     --partition=$PARTITION
     --output=$RESOURCE_HOME/forward-util/$NAME.out
@@ -61,7 +61,7 @@ command="${RESOURCE} sbatch
     $RESOURCE_HOME/forward-util/$SBATCH_NAME $PORT \"${@:2}\""
 
 echo ${command}
-ssh ${command}
+ssh ${RESOURCE} ${command}
 
 # Tell the user how to view error/output logs
 instruction_get_logs

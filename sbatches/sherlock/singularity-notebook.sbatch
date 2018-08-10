@@ -26,15 +26,6 @@
 # mapped to the container so that modules you have installed locally will 
 # be usable in the notebook.
 
-# --- Containershare: You can select
-# If you need a set of notebooks to use, or bootstrap, check out the 
-# containershare provided by @vsoch: https://vsoch.github.io/containershare 
-# These are all Docker containers that are used by this tool by pulling
-# them onto the cluster as Singularity containers with have jupyter notebooks 
-# (e.g., julia, jupyter, or similar)
-
-# Please Open an issue there to request a custom container! :)
-
 # Ensure we have at least port and container
 if (( $# < 2 )); then
     echo "Please provide minimally PORT and CONTAINER"
@@ -45,7 +36,6 @@ fi
 PORT=$1
 CONTAINER="${2}"
 NOTEBOOK_DIR="${3:-${SCRATCH}}"
-CONTAINERSHARE=${4:-/scratch/users/vsochat/share}
 
 module use system
 module load singularity
@@ -58,29 +48,16 @@ cd ${NOTEBOOK_DIR}
 if [ ! -f "${CONTAINER}" ]
     then
 
-    # The container name is the hash of the string
+    # Attempt 1: look in the containershare
+    echo "Container ${CONTAINER} not found on filesystem, attempting pull..."
     CONTAINER_NAME=$(echo -n "${CONTAINER}" | md5sum | awk '{ print $1 }').simg
 
-    # Attempt 1: look in the containershare
-    echo "Attempt 1: Looking for ${CONTAINERSHARE}/${CONTAINER_NAME}"
-    if [ -f "${CONTAINERSHARE}/${CONTAINER_NAME}" ]
+    # Pull the container, if it doesn't exist.
+    if [ ! -f "${SINGULARITY_CACHEDIR}/${CONTAINER_NAME}" ]
         then
-        echo "Container ${CONTAINER} found in containershare!"
-        CONTAINER="${CONTAINERSHARE}/${CONTAINER_NAME}"
-    else
-
-        # Attempt 2: Look in the user's cache
-        if [ ! -f "${SINGULARITY_CACHEDIR}/${CONTAINER_NAME}" ]
-            then
-            echo "Attempt 2: Container ${CONTAINER} not found on filesystem, attempting pull..."
-            echo "singularity pull --name ${CONTAINER_NAME} ${CONTAINER}"
-            singularity pull --name "${CONTAINER_NAME}" "${CONTAINER}"
-        fi
-
-        # Pull the container, if it doesn't exist.
-        CONTAINER="${SINGULARITY_CACHEDIR}/${CONTAINER_NAME}"
-
+        singularity pull --name "${CONTAINER_NAME}" "${CONTAINER}"
     fi
+    CONTAINER="${SINGULARITY_CACHEDIR}/${CONTAINER_NAME}"
 fi
 
 # If still doesn't exist, exit

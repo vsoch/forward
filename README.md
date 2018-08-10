@@ -13,12 +13,7 @@ for use and submission. It's up to you to decide if you want a port forwarded (e
 or just an instruction for how to connect to a running node with your application.
 
 ## Setup
-For interested users, a few tutorials are provided:
-
- - [sherlock jupyter](https://vsoch.github.io/lessons/sherlock-jupyter/) 
- - [sherlock tensorflow](https://vsoch.github.io/lessons/jupyter-tensorflow/)
- - [sherlock singularity jupyter](https://vsoch.github.io/lessons/sherlock-singularity)
-
+For interested users, a few tutorials are provided on the [Research Computing Lessons](https://vsoch.github.io/lessons) site.
 Brief instructions are also documented in this README.
 
 ### Clone the Repository
@@ -26,14 +21,17 @@ Clone this repository to your local machine.
 
 You will then need to create a parameter file.  To do so, follow the prompts at:
 
-`bash setup.sh`
+```bash
+bash setup.sh
+```
 
-You can always edit params.sh later to change these configuration options. 
+You can always edit `params.sh` later to change these configuration options. 
 
 #### Parameters
 
  - **RESOURCE** should refer to an identifier for your cluster resource that will be recorded in your ssh configuration, and then referenced in the scripts to interact with the resource (e.g., `ssh sherlock`).
  - **PARTITION** If you intend to use a GPU (e.g., [sbatches/py2-tensorflow.sbatch](sbatches/py2-tensorflow.sbatch) the name of the PARTITION variable should be "gpu."
+ - **CONTAINERSHARE** (optional) is a location on your cluster resource (typically world readable) where you might find containers (named by a hash of the container name in the [library]() that are ready to go! If you are at Stanford, leave this to be default. If you aren't, then ask your cluster admin about [setting up a containershare](https://www.github.com/vsoch/containershare)
 
 If you want to modify the partition flag to have a different gpu setup (other than `--partition gpu --gres gpu:1`) then you should set this **entire** string for the partition variable.
 
@@ -72,6 +70,7 @@ balancing since you need to be connecting to the same login machine at each
 step.
 
 # Notebooks
+
 Notebooks have associated sbatch scripts that are intended to start a jupyter (or similar)
 notebook, and then forward the port back to your machine. If you just want to submit a job,
 (without port forwarding) see [the job submission](#job-submission) section. For 
@@ -88,11 +87,15 @@ Make sure to pick a secure password!
 Job submission can mean executing a command to a container, running a container, or 
 writing your own sbatch script (and submitting from your local machine). For 
 standard job submission, you will want to use the [start-node.sh](start-node.sh) script.
-For a notebook type job (anything with jupyter and 
+If your cluster has a containershare, you can use the `containershare-notebook`
+set of scripts to have a faster deployment (without needing to pull).
 
 ## Usage
 
 ```bash
+# Choose a containershare notebook, and launch it! On Sherlock, the containers are already in the share
+bash start.sh sherlock/containershare-notebook docker://vanessa/repo2docker-julia
+
 # Run a Singularity container that already exists on your resource (recommended)
 bash start-node.sh singularity-run /scratch/users/vsochat/share/pytorch-dev.simg
 
