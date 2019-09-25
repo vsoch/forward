@@ -18,18 +18,21 @@ PORT=$1
 NOTEBOOK_DIR=${2:-${SCRATCH}}
 CONTAINER=${3:-/scratch/users/vsochat/share/repo2docker.simg}
 
-module use system
-module load singularity
 export SINGULARITY_CACHEDIR="${SCRATCH}/.singularity"
 echo "Container is ${CONTAINER}"
 echo "Notebook directory is ${NOTEBOOK_DIR}"
 cd ${NOTEBOOK_DIR}
 
 # Create .local folder for default modules, if doesn't exist
-if [ ! -d "${HOME}/.local" ];
-  then
+if [ ! -d "${HOME}/.local" ]; then
     echo "Creating local python modules folder to map at ${HOME}/.local";
     mkdir -p "${HOME}/.local";
+fi
+
+# If the container is from Docker Hub, pull it first
+if [[ "${CONTAINER}" == docker* ]]; then
+    singularity pull --name $(basename ${CONTAINER}).sif "${CONTAINER}"
+    CONTAINER=$(basename ${CONTAINER}).sif
 fi
 
 singularity exec --home ${HOME} --bind ${HOME}/.local:/home/username/.local ${CONTAINER} jupyter notebook --no-browser --port=$PORT --ip 0.0.0.0
