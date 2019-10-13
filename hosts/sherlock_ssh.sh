@@ -16,4 +16,4 @@ echo "Host sherlock
     GSSAPIAuthentication yes
     ControlMaster auto
     ControlPersist yes
-    ControlPath ~/.ssh/%l%r@%h:%p"
+    ControlPath ~/.ssh/%C"
