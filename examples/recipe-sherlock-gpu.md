@@ -1,6 +1,7 @@
 # Jupyter with GPU on Sherlock
 
 A recipe for interactive computing using custom Jupyter kernels on Stanford's Sherlock.
+Contributed by [@zqfang](https://github.com/zqfang)
 
 ## Setting up custom conda environment on Sherlock's login node
 ### 1. Download and install Miniconda
