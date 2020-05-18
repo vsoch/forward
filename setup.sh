@@ -10,7 +10,7 @@ read -p "Resource identifier (default: sherlock) > "  RESOURCE
 RESOURCE=${RESOURCE:-sherlock}
 
 echo
-read -p "${RESOURCE} username > "  USERNAME
+read -p "${RESOURCE} username > "  FORWARD_USERNAME
 
 echo
 echo "Next, pick a port to use.  If someone else is port forwarding using that
@@ -43,7 +43,7 @@ MEM=20G
 
 TIME=8:00:00
 
-for var in USERNAME PORT PARTITION RESOURCE MEM TIME CONTAINERSHARE
+for var in FORWARD_USERNAME PORT PARTITION RESOURCE MEM TIME CONTAINERSHARE
 do
     echo "$var="'"'"$(eval echo '$'"$var")"'"'
 done >> params.sh
