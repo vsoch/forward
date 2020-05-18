@@ -79,4 +79,4 @@ echo "== Connecting to resource =="
 print_logs
 
 echo "Connect to machine:"
-echo "ssh -t ${RESOURCE} ssh ${USERNAME}@${MACHINE}"
+echo "ssh -t ${RESOURCE} ssh ${FORWARD_USERNAME}@${MACHINE}"
