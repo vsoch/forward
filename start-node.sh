@@ -54,11 +54,16 @@ SBATCH_NAME=$(basename $SBATCH)
 command="sbatch
     --job-name=$NAME
     --partition=$PARTITION
-    --output=$RESOURCE_HOME/forward-util/$NAME.out
-    --error=$RESOURCE_HOME/forward-util/$NAME.err
+    --output=$RESOURCE_HOME/forward-util/$SBATCH_NAME.out
+    --error=$RESOURCE_HOME/forward-util/$SBATCH_NAME.err
     --mem=$MEM
-    --time=$TIME
-    $RESOURCE_HOME/forward-util/$SBATCH_NAME $PORT \"${@:2}\""
+    --time=$TIME"
+
+# If we want a gres
+if [[ "${GRES}" != "" ]]; then
+    command="${command} --gres ${GRES}"
+fi
+command="${command} $RESOURCE_HOME/forward-util/$SBATCH_NAME $PORT \"${@:2}\""
 
 echo ${command}
 ssh ${RESOURCE} ${command}

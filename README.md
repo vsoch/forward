@@ -134,9 +134,11 @@ bash start.sh sherlock/containershare-notebook docker://vanessa/repo2docker-juli
 ```
 
 If you would like to request a custom notebook, please [reach out](https://www.github.com/vsoch/containershare/issues).
+See [examples](examples) for Nero and Sherlock in the [examples](examples) folder.
 
-## Usage
+## More Examples
 
+In addition to [examples](examples), here are some quick command examples:
 
 ```bash
 # To start a jupyter notebook in a specific directory ON the cluster resource
