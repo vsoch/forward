@@ -6,12 +6,9 @@
 echo
 read -p "Sherlock username > "  FORWARD_USERNAME
 
-# Randomly select login node from 1..4
-LOGIN_NODE=$((1 + RANDOM % 8))
-
 echo "Host sherlock
     User ${FORWARD_USERNAME}
-    Hostname sh-ln0${LOGIN_NODE}.stanford.edu
+    Hostname login.sherlock.stanford.edu
     GSSAPIDelegateCredentials yes
     GSSAPIAuthentication yes
     ControlMaster auto
