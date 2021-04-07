@@ -96,14 +96,17 @@ function get_machine() {
 
     done
 
-    echo $MACHINE
     MACHINE="`ssh ${RESOURCE} squeue --name=$NAME --user=$FORWARD_USERNAME -o "%R" -h`"
+    # Nero must have lookup based on ip addres
+    if [[ ${RESOURCE} == "nero" ]]; then
+        MACHINE=$(ssh ${RESOURCE} scontrol show node $MACHINE | grep NodeAddr | cut -d' ' -f4 | cut -d'=' -f2)
+    fi
     echo $MACHINE
 
     # If we didn't get a node...
-    if [[ "$MACHINE" != "sh"* ]]
+    if [[ "$MACHINE" != "sh"* ]] && [[ "${RESOURCE}" != "nero"* ]]
         then
-        echo "Tried ${ATTEMPTS} attempts!"  1>&2
+        echo "Tried ${ATTEMPT} attempts!"  1>&2
         exit 1
     fi
 }
@@ -137,7 +140,11 @@ function setup_port_forwarding() {
     echo
     echo "== Setting up port forwarding =="
     sleep 5
-    echo "ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N $MACHINE &"
-    ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N "$MACHINE" &
-
+    if [[ "${RESOURCE}" == "nero" ]]; then
+        echo "ssh -N -L${PORT}:${MACHINE}:${PORT} nero  &"
+        ssh -N -L${PORT}:${MACHINE}:${PORT} nero  &
+    else
+        echo "ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N $MACHINE &"
+        ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N "$MACHINE" &
+    fi
 }

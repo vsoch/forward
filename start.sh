@@ -44,6 +44,11 @@ echo
 echo "== Uploading sbatch script =="
 scp $FORWARD_SCRIPT ${RESOURCE}:$RESOURCE_HOME/forward-util/
 
+if [[ "$?" != "0" ]]; then
+    echo "Issue uploading script with scp, trying sftp..."
+    echo "put ${FORWARD_SCRIPT}" | sftp ${FORWARD_USERNAME}@${RESOURCE}:${RESOURCE_HOME}/forward-util/
+fi
+
 # adjust PARTITION if necessary
 set_partition
 echo
@@ -57,8 +62,13 @@ command="sbatch
     --output=$RESOURCE_HOME/forward-util/$SBATCH_NAME.out
     --error=$RESOURCE_HOME/forward-util/$SBATCH_NAME.err
     --mem=$MEM
-    --time=$TIME
-    $RESOURCE_HOME/forward-util/$SBATCH_NAME $PORT \"${@:2}\""
+    --time=$TIME"
+
+# If we want a gres
+if [[ "${GRES}" != "" ]]; then
+    command="${command} --gres ${GRES}"
+fi
+command="${command} $RESOURCE_HOME/forward-util/$SBATCH_NAME $PORT \"${@:2}\""
 
 echo ${command}
 ssh ${RESOURCE} ${command}

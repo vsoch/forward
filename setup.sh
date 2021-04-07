@@ -28,6 +28,15 @@ read -p "${RESOURCE} partition (default: normal) > "  PARTITION
 PARTITION=${PARTITION:-normal}
 
 echo
+echo "If you are using a gpu partition, you might want to define the next setting,
+--gres to be something like gpu:1 (e.g., setting gpu:1 for this next variable
+will be adding the flag --gres=gpu:1. Otherwise, leave blank to leave this unset"
+echo
+read -p "${RESOURCE} gres (default: unset) > "  GRES
+GRES=${GRES:-}
+
+
+echo
 SHARE="/scratch/users/vsochat/share"
 echo "A containershare (https://vsoch.github.io/containershare is a library of
 containers that are prebuilt for you, and provided on your cluster resource. if you
@@ -43,7 +52,7 @@ MEM=20G
 
 TIME=8:00:00
 
-for var in FORWARD_USERNAME PORT PARTITION RESOURCE MEM TIME CONTAINERSHARE
+for var in FORWARD_USERNAME PORT PARTITION RESOURCE MEM TIME CONTAINERSHARE GRES
 do
     echo "$var="'"'"$(eval echo '$'"$var")"'"'
 done >> params.sh
