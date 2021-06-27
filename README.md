@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # forward
 
 ## What is this?
@@ -245,3 +246,7 @@ First, please read the [contributing docs](CONTRIBUTING.md). Generally, you will
 ## Adding new sbatch scripts
 
 You can add more sbatch scripts by putting them in the sbatches directory.
+=======
+# FarmshareJupyter
+
+>>>>>>> e61fbca6c5c2cb01ec834f41bc55cfa198376289
