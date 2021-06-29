@@ -24,11 +24,11 @@ echo "Notebook directory is ${NOTEBOOK_DIR}"
 cd ${NOTEBOOK_DIR}
 
 #Create .local folder for default modules, if doesn't exist
-#if [ ! -d "${HOME}/.local" ];
-#  then
-#    echo "Creating local python modules folder to map at ${HOME}/.local";
-#    mkdir -p "${HOME}/.local";
-#fi
+if [ ! -d "${HOME}/.local" ];
+  then
+    echo "Creating local python modules folder to map at ${HOME}/.local";
+    mkdir -p "${HOME}/.local";
+fi
 
 . /etc/profile
 module load singularity/3.4.0

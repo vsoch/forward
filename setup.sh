@@ -8,6 +8,11 @@ will set up this name in your ssh configuration, and use it to reference the res
 echo
 read -p "Resource identifier (default: sherlock) > "  RESOURCE
 RESOURCE=${RESOURCE:-sherlock}
+#if [[ "${RESOURCE}" == "sherlock" ]]
+#SHERLOCK = ${SHERLOCK:-true}
+
+
+
 
 echo
 read -p "${RESOURCE} username > "  FORWARD_USERNAME
@@ -34,7 +39,7 @@ echo "A containershare (https://vsoch.github.io/containershare is a library of
 containers that are prebuilt for you, and provided on your cluster resource. if you
 are at Stanford, leave this to be the default. If not, ask your HPC administrator
 about setting one up, and direct them to https://www.github.com/vsoch/containershare.
-For farmshare, please use /farmshare/home/classes/bioe/301p/ce/ces"
+For farmshare, leave blank to use default singularity maintained by Paul Nuyujukian (/farmshare/home/classes/bioe/301p/ce/ces)"
 echo
 read -p "container shared folder (default for Stanford: ${SHARE}) > " CONTAINERSHARE
 CONTAINERSHARE=${CONTAINERSHARE:-${SHARE}}
