@@ -8,9 +8,14 @@ will set up this name in your ssh configuration, and use it to reference the res
 echo
 read -p "Resource identifier (default: sherlock) > "  RESOURCE
 RESOURCE=${RESOURCE:-sherlock}
-#if [[ "${RESOURCE}" == "sherlock" ]]
-#SHERLOCK = ${SHERLOCK:-true}
-
+if [[ "${RESOURCE}" == "sherlock" ]]
+then
+   SHERLOCK=true
+   MACHINEPREFIX=${MACHINEPREFIX:-sh}
+else 
+   SHERLOCK=false
+   MACHINEPREFIX=${MACHINEPREFIX:-wheat}
+fi
 
 
 
@@ -50,7 +55,7 @@ MEM=20G
 
 TIME=8:00:00
 
-for var in FORWARD_USERNAME PORT PARTITION RESOURCE MEM TIME CONTAINERSHARE
+for var in FORWARD_USERNAME PORT PARTITION RESOURCE MEM TIME CONTAINERSHARE SHERLOCK MACHINEPREFIX
 do
     echo "$var="'"'"$(eval echo '$'"$var")"'"'
 done >> params.sh
