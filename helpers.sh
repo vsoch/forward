@@ -101,10 +101,13 @@ function get_machine() {
     echo $MACHINE
 
     # If we didn't get a node...
-    if [[ "$MACHINE" != "sh"* ]]
+    if [[ "$MACHINE" != "wheat"* ]]
         then
-        echo "Tried ${ATTEMPTS} attempts!"  1>&2
-        exit 1
+	if [[ "$MACHINE" != "sh"* ]]
+	    then	
+            echo "Tried ${ATTEMPTS} attempts!"  1>&2
+            exit 1
+	fi
     fi
 }
 
@@ -137,7 +140,14 @@ function setup_port_forwarding() {
     echo
     echo "== Setting up port forwarding =="
     sleep 5
-    echo "ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N $MACHINE &"
-    ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N "$MACHINE" &
-
+    if [[ "${RESOURCE}" == "farmshare" ]]
+    then 
+        echo "ssh rice.stanford.edu -l $FORWARD_USERNAME -K -L  $PORT:$MACHINE:$PORT -N  &"
+        ssh rice.stanford.edu -l $FORWARD_USERNAME -K -L  $PORT:$MACHINE:$PORT -N  &
+    fi
+    if [[ "${RESOURCE}" == "sherlock" ]] 
+    then 
+       echo "ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N $MACHINE &"
+       ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N "$MACHINE" &
+    fi
 }

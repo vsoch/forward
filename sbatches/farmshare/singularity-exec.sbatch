@@ -17,4 +17,6 @@ fi
 cd $NOTEBOOK_DIR
 
 export SINGULARITY_CACHEDIR=/farmshare/user_data/${USERNAME}/.singularity
+. /etc/profile
+module load singularity/3.4.0
 singularity exec ${CONTAINER} "${@}"

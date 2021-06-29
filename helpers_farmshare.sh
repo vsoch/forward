@@ -101,7 +101,7 @@ function get_machine() {
     echo $MACHINE
 
     # If we didn't get a node...
-    if [[ "$MACHINE" != "wheat"* ]]
+    if [[ "$MACHINE" != "wheat"* || "$MACHINE" != "sh"* ]]
         then
         echo "Tried ${ATTEMPTS} attempts!"  1>&2
         exit 1

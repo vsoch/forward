@@ -1,7 +1,0 @@
-FORWARD_USERNAME="sohams"
-PORT="35927"
-PARTITION="normal"
-RESOURCE="farmshare"
-MEM="20G"
-TIME="8:00:00"
-CONTAINERSHARE="/farmshare/classes/bioe/301p/ce/ces"

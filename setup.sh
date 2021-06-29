@@ -15,7 +15,8 @@ read -p "${RESOURCE} username > "  FORWARD_USERNAME
 echo
 echo "Next, pick a port to use.  If someone else is port forwarding using that
 port already, this script will not work.  If you pick a random number in the
-range 49152-65335, you should be good."
+range 49152-65335, you should be good. For farmshare, please use a port number higher than
+32768."
 echo
 read -p "Port to use > "  PORT
 
@@ -32,7 +33,8 @@ SHARE="/scratch/users/vsochat/share"
 echo "A containershare (https://vsoch.github.io/containershare is a library of
 containers that are prebuilt for you, and provided on your cluster resource. if you
 are at Stanford, leave this to be the default. If not, ask your HPC administrator
-about setting one up, and direct them to https://www.github.com/vsoch/containershare."
+about setting one up, and direct them to https://www.github.com/vsoch/containershare.
+For farmshare, please use /farmshare/home/classes/bioe/301p/ce/ces"
 echo
 read -p "container shared folder (default for Stanford: ${SHARE}) > " CONTAINERSHARE
 CONTAINERSHARE=${CONTAINERSHARE:-${SHARE}}

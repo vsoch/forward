@@ -15,8 +15,8 @@
 # $ bash start.sh singularity /path/to/container <args>
 
 PORT=$1
-NOTEBOOK_DIR=$HOME
-#CONTAINER=/farmshare/home/classes/bioe/301p/ce/ce
+NOTEBOOK_DIR=/farmshare/scratch/users/$USER
+CONTAINER=/farmshare/home/classes/bioe/301p/ce/ce
 
 export SINGULARITY_CACHEDIR=/farmshare/user_data/${USERNAME}
 echo "Container is ${CONTAINER}"
