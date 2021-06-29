@@ -85,4 +85,4 @@ echo
 echo "== Instructions =="
 echo "1. Password, output, and error printed to this terminal? Look at logs (see instruction above)"
 echo "2. Browser: http://$MACHINE:$PORT/ -> http://localhost:$PORT/..."
-echo "3. To end session: bash end.sh ${NAME}"
+echo "3. To end session: bash end_farmshare.sh ${NAME}"
