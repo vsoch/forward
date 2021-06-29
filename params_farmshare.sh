@@ -1,5 +1,5 @@
 FORWARD_USERNAME="sohams"
-PORT="35923"
+PORT="35927"
 PARTITION="normal"
 RESOURCE="farmshare"
 MEM="20G"

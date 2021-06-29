@@ -4,12 +4,12 @@
 # Sample usage: bash end.sh jupyter
 #               bash end.sh tensorboard
 
-if [ ! -f params.sh ]
+if [ ! -f params_farmshare.sh ]
 then
     echo "Need to configure params before first run, run setup.sh!"
     exit
 fi
-source params.sh
+source params_farmshare.sh
 
 if [ "$#" -eq 0 ]
 then

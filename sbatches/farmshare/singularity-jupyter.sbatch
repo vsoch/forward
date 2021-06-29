@@ -1,4 +1,4 @@
-#!/bin/bash -i
+#!/bin/bash -v  
 
 # Usage
 
@@ -15,21 +15,21 @@
 # $ bash start.sh singularity /path/to/container <args>
 
 PORT=$1
-NOTEBOOK_DIR=${2:-${SCRATCH}}
-CONTAINER=${/farmshare/home/classes/bioe/301p/ce/ces}
+NOTEBOOK_DIR=$HOME
+#CONTAINER=/farmshare/home/classes/bioe/301p/ce/ce
 
-export SINGULARITY_CACHEDIR=/farmshare/user_data/${USERNAME}/.singularity
+export SINGULARITY_CACHEDIR=/farmshare/user_data/${USERNAME}
 echo "Container is ${CONTAINER}"
 echo "Notebook directory is ${NOTEBOOK_DIR}"
 cd ${NOTEBOOK_DIR}
 
-# Create .local folder for default modules, if doesn't exist
+#Create .local folder for default modules, if doesn't exist
 #if [ ! -d "${HOME}/.local" ];
 #  then
 #    echo "Creating local python modules folder to map at ${HOME}/.local";
 #    mkdir -p "${HOME}/.local";
 #fi
 
-source . /etc/profile
-module load singularity
-singularity exec --home ${HOME} ${CONTAINER} jupyter notebook --no-browser --port=$PORT --ip 0.0.0.0
+. /etc/profile
+module load singularity/3.4.0
+singularity exec /farmshare/home/classes/bioe/301p/ce/ces jupyter notebook --no-browser --port=$PORT --ip 0.0.0.0

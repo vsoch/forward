@@ -18,12 +18,12 @@ then
     exit
 fi
 
-if [ ! -f helpers.sh ]
+if [ ! -f helpers_farmshare.sh ]
 then
-    echo "Cannot find helpers.sh script!"
+    echo "Cannot find helpers_farmshare.sh script!"
     exit
 fi
-. helpers.sh
+. helpers_farmshare.sh
 
 NAME="${1:-}"
 
@@ -48,8 +48,8 @@ scp $FORWARD_SCRIPT ${RESOURCE}:$RESOURCE_HOME/forward-util/
 set_partition
 echo
 
+command1 = "module load singularity"
 echo "== Submitting sbatch =="
-
 SBATCH_NAME=$(basename $SBATCH)
 command="sbatch
     --job-name=$NAME
@@ -58,7 +58,7 @@ command="sbatch
     --error=$RESOURCE_HOME/forward-util/$SBATCH_NAME.err
     --mem=$MEM
     --time=$TIME
-    $RESOURCE_HOME/forward-util/$SBATCH_NAME $PORT \"${@:2}\""
+    $RESOURCE_HOME/forward-util/$SBATCH_NAME $PORT \"${@:2}\"" 
 
 echo ${command}
 ssh ${RESOURCE} ${command}
