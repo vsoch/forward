@@ -1,4 +1,4 @@
-#forward
+# forward
 
 ## What is this?
 Forward sets up an sbatch script on your cluster resource and port forwards it back to your local machine! 
@@ -244,5 +244,4 @@ First, please read the [contributing docs](CONTRIBUTING.md). Generally, you will
 ## Adding new sbatch scripts
 
 You can add more sbatch scripts by putting them in the sbatches directory.
-
 
