@@ -16,7 +16,7 @@
 
 PORT=$1
 NOTEBOOK_DIR=/farmshare/scratch/users/$USER
-CONTAINER=/farmshare/home/classes/bioe/301p/ce/ce
+CONTAINER=${3:-/farmshare/home/classes/bioe/301p/ce/ces}
 
 export SINGULARITY_CACHEDIR=/farmshare/user_data/${USERNAME}/.singularity
 echo "Container is ${CONTAINER}"
@@ -32,4 +32,4 @@ fi
 
 . /etc/profile
 module load singularity/3.4.0
-singularity exec /farmshare/home/classes/bioe/301p/ce/ces jupyter notebook --no-browser --port=$PORT --ip 0.0.0.0
+singularity exec --home ${HOME} --bind ${HOME}/.local:/home/username/.local ${CONTAINER} jupyter notebook --no-browser --port=$PORT --ip 0.0.0.0

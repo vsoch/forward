@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Sets up parameters for use with other scripts.  Removes an instance of param.sh if there exists. 
+# Sets up parameters for use with other scripts.  Removes an instance of param.sh if it exists. 
 # Sample usage: bash setup.sh
 # Can be run for any number of times
 rm -r params.sh
@@ -48,8 +48,12 @@ about setting one up, and direct them to https://www.github.com/vsoch/containers
 For farmshare, leave blank to use default singularity maintained by Paul Nuyujukian (/farmshare/home/classes/bioe/301p/ce/ces)"
 echo
 read -p "container shared folder (default for Stanford: ${SHARE}) > " CONTAINERSHARE
-CONTAINERSHARE=${CONTAINERSHARE:-${SHARE}}
-
+if $SHERLOCK
+then
+   CONTAINERSHARE=${CONTAINERSHARE:-${SHARE}}
+else
+   CONTAINERSHARE=${CONTAINERSHARE:-/farmshare/home/classes/bioe/301p/ce/ces}
+fi
 echo
 
 MEM=20G
