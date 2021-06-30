@@ -142,7 +142,7 @@ function setup_port_forwarding() {
        echo "ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N $MACHINE &"
        ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N "$MACHINE" &
     else
-       echo "ssh rice.stanford.edu -l $FORWARD_USERNAME -K -L  $PORT:$MACHINE:$PORT -N  &"
-       ssh rice.stanford.edu -l $FORWARD_USERNAME -K -L  $PORT:$MACHINE:$PORT -N  &
+       echo "ssh $DOMAINNAME -l $FORWARD_USERNAME -K -L  $PORT:$MACHINE:$PORT -N  &"
+       ssh "$DOMAINNAME" -l $FORWARD_USERNAME -K -L  $PORT:$MACHINE:$PORT -N  &
     fi
 }

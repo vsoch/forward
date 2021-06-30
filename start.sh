@@ -81,17 +81,9 @@ print_logs
 echo
 instruction_get_logs
 
-if $SHERLOCK
-then
-  echo
-  echo "== Instructions =="
-  echo "1. Password, output, and error printed to this terminal? Look at logs (see instruction above)"
-  echo "2. Browser: http://sh-02-21.int:$PORT/ -> http://localhost:$PORT/..."
-  echo "3. To end session: bash end.sh ${NAME}"
-else
-  echo 
-  echo "== Instructions =="
-  echo "1. Password, output, and error printed to this terminal? Look at logs (see instruction above)"
-  echo "2. Browser: http://$MACHINE:$PORT/ -> http://localhost:$PORT/..."
-  echo "3. To end session: bash end.sh ${NAME}"
-fi
+echo 
+echo "== Instructions =="
+echo "1. Password, output, and error printed to this terminal? Look at logs (see instruction above)"
+echo "2. Browser: http://$MACHINE:$PORT/ -> http://localhost:$PORT/..."
+echo "3. To end session: bash end.sh ${NAME}"
+
