@@ -1,8 +1,9 @@
 #!/bin/bash
 #
-# Sets up parameters for use with other scripts.  Should be run once.
+# Sets up parameters for use with other scripts.  Removes an instance of param.sh if there exists. 
 # Sample usage: bash setup.sh
-
+# Can be run for any number of times
+rm -r params.sh
 echo "First, choose the resource identifier that specifies your cluster resoure. We
 will set up this name in your ssh configuration, and use it to reference the resource (sherlock)."
 echo
