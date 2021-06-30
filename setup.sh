@@ -12,13 +12,19 @@ RESOURCE=${RESOURCE:-sherlock}
 if [[ "${RESOURCE}" == "sherlock" ]]
 then
    SHERLOCK=true
-   MACHINEPREFIX=${MACHINEPREFIX:-sh}
 else 
    SHERLOCK=false
-   MACHINEPREFIX=${MACHINEPREFIX:-wheat}
 fi
 
-
+echo "Next, please supply the prefix of the compute nodes that are used in your cluster resource. We will use this to check for assignment of 
+compute node when we submit the sbatch script. If you are using sherlock or farmshare (without gpu capability), then prefixes are set for you."
+read -p "Compute Node Prefix identifier (default: sh for sherlock) > "  MACHINEPREFIX 
+if $SHERLOCK 
+then
+   MACHINEPREFIX=${MACHINEPREFIX:-sh}
+else
+   MACHINEPREFIX=${MACHINEPREFIX:-wheat}
+fi
 
 echo
 read -p "${RESOURCE} username > "  FORWARD_USERNAME
