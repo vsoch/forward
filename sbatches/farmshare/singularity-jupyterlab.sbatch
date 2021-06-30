@@ -6,16 +6,16 @@
 # $ bash start.sh singularity-jupyter
 
 # 2. Default Jupyter notebook with custom working directory
-# $ bash start.sh singularity-jupyter /scratch/users/<username>
+# $ bash start.sh singularity-jupyter /farmshare/scratch/users/<username>
 
 # 3. Select your own jupyter container on Sherlock!
-# $ bash start.sh singularity-jupyter /scratch/users/<username> /path/to/container
+# $ bash start.sh singularity-jupyter /farmshare/scratch/users/<username> /path/to/container
 
 # 4. Or any singularity container...
 # $ bash start.sh singularity /path/to/container <args>
 
 PORT=$1
-NOTEBOOK_DIR=/farmshare/scratch/users/$USER
+NOTEBOOK_DIR=${2:-/farmshare/scratch/users/$USER}
 CONTAINER=${3:-/farmshare/home/classes/bioe/301p/ce/ces}
 
 export SINGULARITY_CACHEDIR=/farmshare/user_data/${USERNAME}/.singularity
