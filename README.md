@@ -1,4 +1,6 @@
+#forward
 
+## What is this?
 Forward sets up an sbatch script on your cluster resource and port forwards it back to your local machine! 
 Useful for jupyter notebook and tensorboard, amongst other things.
 

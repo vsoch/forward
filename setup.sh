@@ -17,21 +17,30 @@ else
    SHERLOCK=false
 fi
 
-echo "Next, please supply the domain name of the resource. If you are using farmshare or sherlock, leave as default."
-echo
-read -p "Domain Name for Resource (default: rice.stanford.edu for farmshare) > " DOMAINNAME
-DOMAINNAME=${DOMAINNAME:-rice.stanford.edu}
-
-echo "Next, please supply the prefix of the compute nodes that are used in your cluster resource. We will use this to check for assignment of 
-compute node when we submit the sbatch script. If you are using sherlock or farmshare (without gpu capability), then prefixes are set for you."
-echo
-read -p "Compute Node Prefix identifier (default: sh for sherlock) > "  MACHINEPREFIX 
-
-if $SHERLOCK 
+if $SHERLOCK
 then
    MACHINEPREFIX=${MACHINEPREFIX:-sh}
+   USE_LSOF=${USE_LSOF:-/usr/sbin/lsof}
+   DOMAINNAME=${DOMAINNAME:-login.sherlock.stanford.edu}
 else
    MACHINEPREFIX=${MACHINEPREFIX:-wheat}
+   USE_LSOF=${USE_LSOF:-lsof}
+   DOMAINNAME=${DOMAINNAME:-rice.stanford.edu}
+fi
+
+if [[ "${RESOURCE}" != "sherlock" ]]
+then
+   if [[ "${RESOURCE}" != "farmshare" ]]
+   then
+      echo "Since, you are not using farmshare or sherlock, please supply the domain name of your resource"
+      echo
+      read -p "Domain Name for Resource > " DOMAINNAME
+      echo 
+      echo "Next, please supply the prefix of the compute nodes that are used in your cluster resource. We will use this to check for assignment of
+      compute node when we submit the sbatch script. If you are using sherlock or farmshare (without gpu capability), then prefixes are set for you."
+      echo
+      read -p "Compute Node Prefix identifier > "  MACHINEPREFIX
+   fi
 fi
 
 echo
@@ -73,18 +82,6 @@ echo
 MEM=20G
 
 TIME=8:00:00
-
-echo 
-echo "Finally, please supply the directory at which the lsof command is located. This is used to kill ports that the we are forwarding when
-we setup our jupyter notebooks. If you are at Stanford using farmshare or sherlock,  you can leave as is."
-echo
-read -p "Location of Lsof (default for sherlock: /user/sbin/lsof) > " USE_LSOF
-if $SHERLOCK
-then
-   USE_LSOF=${USE_LSOF:-/usr/sbin/lsof}
-else
-   USE_LSOF=${USE_LSOF:-lsof}
-fi
 
 
 for var in FORWARD_USERNAME PORT PARTITION RESOURCE MEM TIME CONTAINERSHARE SHERLOCK MACHINEPREFIX DOMAINNAME USE_LSOF
