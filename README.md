@@ -81,7 +81,7 @@ step.
 
 Depending on your cluster, you will need to identify whether the compute nodes (not the login nodes) are isolated from the outside world or not (i.e can be ssh'd into directly). For Sherlock, they are isolated. For FarmShare they are not. This is important when we are setting up the ssh command to port forward from the local machine to the compute node. 
 
-For HPC's where the compute node is isolated from the outside world - like in sherlock. The ssh command basically establishes a tunnel to the login node, and then from the login node establishes another tunnel to the compute node. 
+For HPC's where the compute node is isolated from the outside world (as is the case with sherlock), the ssh command basically establishes a tunnel to the login node, and then from the login node establishes another tunnel to the compute node. 
 In this case (as in the case for Sherlock) we write a command where we port forward to the login node, and then the compute node, which is accessible from the login node. The entire command might look like this:
 
       $ ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N "$MACHINE" &
