@@ -88,7 +88,7 @@ ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N "$MACHI
 ```
 
 For HPC's where the compute node is not isolated from the outside world - like in Farmshare. The ssh command for port forwarding first establishes a connection the login node, but then continues to pass on the login credentials to the compute node to establish a tunnel between the localhost and the port on the compute node. 
-The ssh command in this case utilises the flag `-K` which forwards the login credentials to the compute node:
+The ssh command in this case utilizes the flag `-K` which forwards the login credentials to the compute node:
 ```bash
 ssh "$DOMAINNAME" -l $FORWARD_USERNAME -K -L  $PORT:$MACHINE:$PORT -N  &
 ```
