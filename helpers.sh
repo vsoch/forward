@@ -137,7 +137,7 @@ function setup_port_forwarding() {
     echo
     echo "== Setting up port forwarding =="
     sleep 5
-    if $SSHBOOL
+    if $ISOLATEDCOMPUTENODE
     then 
        echo "ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N $MACHINE &"
        ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N "$MACHINE" &

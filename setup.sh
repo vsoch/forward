@@ -22,27 +22,27 @@ then
    MACHINEPREFIX=${MACHINEPREFIX:-sh}
    USE_LSOF=${USE_LSOF:-/usr/sbin/lsof}
    DOMAINNAME=${DOMAINNAME:-login.sherlock.stanford.edu}
-   SSHBOOL=${SSHBOOL:-true}
-else
+   ISOLATEDCOMPUTENODE=${ISOLATEDCOMPUTENODE:-true}
+elif [[ "${RESOURCE}" == "farmshare" ]]
+then
    MACHINEPREFIX=${MACHINEPREFIX:-wheat}
    USE_LSOF=${USE_LSOF:-lsof}
    DOMAINNAME=${DOMAINNAME:-rice.stanford.edu}
-   SSHBOOL=${SSHBOOL:-false}
-fi
-
-if [[ "${RESOURCE}" != "sherlock" ]]
-then
-   if [[ "${RESOURCE}" != "farmshare" ]]
-   then
-      echo "Since, you are not using farmshare or sherlock, please supply the domain name of your resource"
-      echo
-      read -p "Domain Name for Resource > " DOMAINNAME
-      echo 
-      echo "Next, please supply the prefix of the compute nodes that are used in your cluster resource. We will use this to check for assignment of
-      compute node when we submit the sbatch script. If you are using sherlock or farmshare (without gpu capability), then prefixes are set for you."
-      echo
-      read -p "Compute Node Prefix identifier > "  MACHINEPREFIX
-   fi
+   ISOLATEDCOMPUTENODE=${ISOLATEDCOMPUTENODE:-false}
+else
+   echo "Since, you are not using farmshare or sherlock, please supply the domain name of your resource"
+   echo
+   read -p "Domain Name for Resource > " DOMAINNAME
+   echo 
+   echo "Next, please supply the prefix of the compute nodes that are used in your cluster resource. We will use this to check for assignment of
+   compute node when we submit the sbatch script. If you are using sherlock or farmshare (without gpu capability), then prefixes are set for you."
+   echo
+   read -p "Compute Node Prefix identifier > "  MACHINEPREFIX
+   echo
+   echo "Are the compute nodes in your HPC cluster isolated from the outside internet?"
+   echo
+   read -p "Isolation Status (type true or false) >" ISOLATEDCOMPUTENODE
+   echo 
 fi
 
 echo
@@ -86,7 +86,7 @@ MEM=20G
 TIME=8:00:00
 
 
-for var in FORWARD_USERNAME PORT PARTITION RESOURCE MEM TIME CONTAINERSHARE SHERLOCK MACHINEPREFIX DOMAINNAME USE_LSOF SSHBOOL
+for var in FORWARD_USERNAME PORT PARTITION RESOURCE MEM TIME CONTAINERSHARE SHERLOCK MACHINEPREFIX DOMAINNAME USE_LSOF ISOLATEDCOMPUTENODE
 do
     echo "$var="'"'"$(eval echo '$'"$var")"'"'
 done >> params.sh
