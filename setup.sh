@@ -12,23 +12,18 @@ RESOURCE=${RESOURCE:-sherlock}
 
 if [[ "${RESOURCE}" == "sherlock" ]]
 then
-   SHERLOCK=true
-else 
-   SHERLOCK=false
-fi
-
-if $SHERLOCK
-then
    MACHINEPREFIX=${MACHINEPREFIX:-sh}
    USE_LSOF=${USE_LSOF:-/usr/sbin/lsof}
    DOMAINNAME=${DOMAINNAME:-login.sherlock.stanford.edu}
    ISOLATEDCOMPUTENODE=${ISOLATEDCOMPUTENODE:-true}
+  
 elif [[ "${RESOURCE}" == "farmshare" ]]
 then
    MACHINEPREFIX=${MACHINEPREFIX:-wheat}
    USE_LSOF=${USE_LSOF:-lsof}
    DOMAINNAME=${DOMAINNAME:-rice.stanford.edu}
    ISOLATEDCOMPUTENODE=${ISOLATEDCOMPUTENODE:-false}
+
 else
    echo "Since, you are not using farmshare or sherlock, please supply the domain name of your resource"
    echo
@@ -73,13 +68,16 @@ about setting one up, and direct them to https://www.github.com/vsoch/containers
 For farmshare, leave blank to use default singularity maintained by Paul Nuyujukian (/farmshare/home/classes/bioe/301p/ce/ces)"
 echo
 read -p "container shared folder (default for Stanford: ${SHARE}) > " CONTAINERSHARE
-if $SHERLOCK
-then
+echo
+if [[ "${RESOURCE}" == "sherlock" ]]
+then 
    CONTAINERSHARE=${CONTAINERSHARE:-${SHARE}}
-else
+elif [[ "${RESOURCE}" == "farmshare" ]]
+then 
    CONTAINERSHARE=${CONTAINERSHARE:-/farmshare/home/classes/bioe/301p/ce/ces}
 fi
-echo
+
+
 
 MEM=20G
 
