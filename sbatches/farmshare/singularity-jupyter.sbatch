@@ -23,7 +23,7 @@ echo "Container is ${CONTAINER}"
 echo "Notebook directory is ${NOTEBOOK_DIR}"
 cd ${NOTEBOOK_DIR}
 
-#Create .local folder for default modules, if doesn't exist
+# Create .local folder for default modules, if doesn't exist
 if [ ! -d "${HOME}/.local" ];
   then
     echo "Creating local python modules folder to map at ${HOME}/.local";
