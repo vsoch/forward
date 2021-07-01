@@ -83,12 +83,15 @@ Depending on your cluster, you will need to identify whether the compute nodes (
 
 For HPC's where the compute node is isolated from the outside world - like in sherlock. The ssh command basically establishes a tunnel to the login node, and then from the login node establishes another tunnel to the compute node. 
 In this case, we write (as in the case for Sherlock). The first half is executed on the local machine `ssh -L $PORT:localhost:$PORT ${RESOURCE}`, which establishes a port forwarding to the login node of the HPC. The next line `ssh -L $PORT:localhost:$PORT -N "$MACHINE" &` is run from the login node on the HPC, and port forwards it to the compute node, since you can only access the compute node from the login nodes. The ssh command is:
+```bash
 `ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N "$MACHINE" &`
+```
 
 For HPC's where the compute node is not isolated from the outside world - like in Farmshare. The ssh command for port forwarding first establishes a connection the login node, but then continues to pass on the login credentials to the compute node to establish a tunnel between the localhost and the port on the compute node. 
 The ssh command in this case utilises the flag `-K` which forwards the login credentials to the compute node:
+```bash
 `ssh "$DOMAINNAME" -l $FORWARD_USERNAME -K -L  $PORT:$MACHINE:$PORT -N  &`
-
+```
 The drawback of this method, that when the start.sh script is run, you will have to authenticate twice (once at the beginning to check if a job is running on the HPC, and when the port forwarding is setup). This is the case for FarmShare. 
 
 In the setup.sh file, we have added an option `$ISOLATECOMPUTENODE`, which is a boolean operator. For users of FarmShare, and Sherlock, this value is set automatically. For your own default cluster, you will be prompted whether the compute node is isolated or not, please write true or false (case sensitive) for your resource depending on its properties. You may have to consult the documentation or ask the HPC manager. 
