@@ -84,11 +84,13 @@ Depending on your cluster, you will need to identify whether the compute nodes (
 For HPC's where the compute node is isolated from the outside world (as is the case with sherlock), the ssh command basically establishes a tunnel to the login node, and then from the login node establishes another tunnel to the compute node. 
 In this case we write a command where we port forward to the login node, and then the compute node, which is accessible from the login node. The entire command might look like this:
 
-      $ ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N "$MACHINE" &
+```bash
+$ ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N "$MACHINE" &
+```
 
 In the command above, the first half is executed on the local machine `ssh -L $PORT:localhost:$PORT ${RESOURCE}`, which establishes a port forwarding to the login node. The next line `ssh -L $PORT:localhost:$PORT -N "$MACHINE" &` is run from the login node, and port forwards it to the compute node, since you can only access the compute node from the login nodes.
 ```bash
-ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N "$MACHINE" &
+$ ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N "$MACHINE" &
 ```
 
 For HPC's where the compute node is not isolated from the outside world (as is the case with Farmshare) the ssh command for port forwarding first establishes a connection the login node, but then continues to pass on the login credentials to the compute node to establish a tunnel between the localhost and the port on the compute node. 
