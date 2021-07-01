@@ -92,7 +92,7 @@ The ssh command in this case utilises the flag `-K` which forwards the login cre
 ```bash
 ssh "$DOMAINNAME" -l $FORWARD_USERNAME -K -L  $PORT:$MACHINE:$PORT -N  &
 ```
-The drawback of this method, that when the start.sh script is run, you will have to authenticate twice (once at the beginning to check if a job is running on the HPC, and when the port forwarding is setup). This is the case for FarmShare. 
+The drawback of this method is that when the start.sh script is run, you will have to authenticate twice (once at the beginning to check if a job is running on the HPC, and when the port forwarding is setup). This is the case for FarmShare. 
 
 In the setup.sh file, we have added an option `$ISOLATECOMPUTENODE`, which is a boolean operator. For users of FarmShare, and Sherlock, this value is set automatically. For your own default cluster, you will be prompted whether the compute node is isolated or not, please write true or false (case sensitive) for your resource depending on its properties. You may have to consult the documentation or ask the HPC manager. 
 
@@ -264,4 +264,3 @@ First, please read the [contributing docs](CONTRIBUTING.md). Generally, you will
 ## Adding new sbatch scripts
 
 You can add more sbatch scripts by putting them in the sbatches directory.
-
