@@ -101,8 +101,8 @@ function get_machine() {
     echo $MACHINE
 
     # If we didn't get a node...
-    if [[ "$MACHINE" != "sh"* ]]
-        then
+    if [[ "$MACHINE" != "$MACHINEPREFIX"* ]]
+    then	
         echo "Tried ${ATTEMPTS} attempts!"  1>&2
         exit 1
     fi
@@ -137,7 +137,12 @@ function setup_port_forwarding() {
     echo
     echo "== Setting up port forwarding =="
     sleep 5
-    echo "ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N $MACHINE &"
-    ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N "$MACHINE" &
-
+    if $ISOLATEDCOMPUTENODE
+    then 
+       echo "ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N $MACHINE &"
+       ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N "$MACHINE" &
+    else
+       echo "ssh $DOMAINNAME -l $FORWARD_USERNAME -K -L  $PORT:$MACHINE:$PORT -N  &"
+       ssh "$DOMAINNAME" -l $FORWARD_USERNAME -K -L  $PORT:$MACHINE:$PORT -N  &
+    fi
 }

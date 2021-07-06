@@ -23,4 +23,4 @@ echo "Killing $NAME slurm job on ${RESOURCE}"
 ssh ${RESOURCE} "squeue --name=$NAME --user=$FORWARD_USERNAME -o '%A' -h | xargs --no-run-if-empty /usr/bin/scancel"
 
 echo "Killing listeners on ${RESOURCE}"
-ssh ${RESOURCE} "/usr/sbin/lsof -i :$PORT -t | xargs --no-run-if-empty kill"
+ssh ${RESOURCE} "${USE_LSOF} -i :$PORT -t | xargs --no-run-if-empty kill"

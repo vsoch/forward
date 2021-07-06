@@ -23,7 +23,7 @@ echo "Container is ${CONTAINER}"
 echo "Notebook directory is ${NOTEBOOK_DIR}"
 cd ${NOTEBOOK_DIR}
 
-# Create .local folder for default modules, if doesn't exist
+#Create .local folder for default modules, if doesn't exist
 if [ ! -d "${HOME}/.local" ];
   then
     echo "Creating local python modules folder to map at ${HOME}/.local";
@@ -32,4 +32,4 @@ fi
 
 . /etc/profile
 module load singularity/3.4.0
-singularity exec --home ${HOME} --bind ${HOME}/.local:/home/username/.local ${CONTAINER} jupyter notebook --no-browser --port=$PORT --ip 0.0.0.0
+singularity exec --home ${HOME} --bind ${HOME}/.local:/home/username/.local ${CONTAINER} jupyter-lab --no-browser --port=$PORT --ip 0.0.0.0

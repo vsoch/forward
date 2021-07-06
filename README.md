@@ -1,7 +1,6 @@
 # forward
 
 ## What is this?
-
 Forward sets up an sbatch script on your cluster resource and port forwards it back to your local machine! 
 Useful for jupyter notebook and tensorboard, amongst other things.
 
@@ -23,7 +22,9 @@ are many possible use cases!
 
 ## Setup
 For interested users, a few tutorials are provided on the [Research Computing Lessons](https://vsoch.github.io/lessons) site.
-Brief instructions are also documented in this README. 
+Brief instructions are also documented in this README.
+
+For farmshare - please navigate to the README located in sbatches/farmshare/README.md.  
 
 ### Clone the Repository
 Clone this repository to your local machine.
@@ -77,6 +78,30 @@ Do not run this command if there is content in the file that you might overwrite
 One downside is that you will be foregoing sherlock's load
 balancing since you need to be connecting to the same login machine at each
 step.
+
+### SSH Port Forwarding Considerations
+
+Depending on your cluster, you will need to identify whether the compute nodes (not the login nodes) are isolated from the outside world or not (i.e can be ssh'd into directly). For Sherlock, they are isolated. For FarmShare they are not. This is important when we are setting up the ssh command to port forward from the local machine to the compute node. 
+
+For HPC's where the compute node is isolated from the outside world (as is the case with sherlock), the ssh command basically establishes a tunnel to the login node, and then from the login node establishes another tunnel to the compute node. 
+In this case we write a command where we port forward to the login node, and then the compute node, which is accessible from the login node. The entire command might look like this:
+
+```bash
+$ ssh -L $PORT:localhost:$PORT ${RESOURCE} ssh -L $PORT:localhost:$PORT -N "$MACHINE" &
+```
+
+In the command above, the first half is executed on the local machine `ssh -L $PORT:localhost:$PORT ${RESOURCE}`, which establishes a port forwarding to the login node. The next line `ssh -L $PORT:localhost:$PORT -N "$MACHINE" &` is run from the login node, and port forwards it to the compute node, since you can only access the compute node from the login nodes.
+
+
+For HPC's where the compute node is not isolated from the outside world (as is the case with Farmshare) the ssh command for port forwarding first establishes a connection the login node, but then continues to pass on the login credentials to the compute node to establish a tunnel between the localhost and the port on the compute node. 
+The ssh command in this case utilizes the flag `-K` which forwards the login credentials to the compute node:
+```bash
+$ ssh "$DOMAINNAME" -l $FORWARD_USERNAME -K -L  $PORT:$MACHINE:$PORT -N  &
+```
+The drawback of this method is that when the start.sh script is run, you will have to authenticate twice (once at the beginning to check if a job is running on the HPC, and when the port forwarding is setup). This is the case for FarmShare. 
+
+In the setup.sh file, we have added an option `$ISOLATECOMPUTENODE`, which is a boolean operator. For users of FarmShare, and Sherlock, this value is set automatically. For your own default cluster, you will be prompted whether the compute node is isolated or not, please write true or false (case sensitive) for your resource depending on its properties. You may have to consult the documentation or ask the HPC manager. 
+
 
 # Notebooks
 
