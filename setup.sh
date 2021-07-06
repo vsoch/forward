@@ -65,7 +65,7 @@ echo "A containershare (https://vsoch.github.io/containershare is a library of
 containers that are prebuilt for you, and provided on your cluster resource. if you
 are at Stanford, leave this to be the default. If not, ask your HPC administrator
 about setting one up, and direct them to https://www.github.com/vsoch/containershare.
-For farmshare, leave blank to use default singularity maintained by Paul Nuyujukian (/farmshare/home/classes/bioe/301p/ce/ces)"
+For farmshare, leave blank to use default singularity maintained by Soham Sinha, which you will need to pull into your home directory. Check README located in sbatches/farmshare/README.md"
 echo
 read -p "container shared folder (default for Stanford: ${SHARE}) > " CONTAINERSHARE
 echo
