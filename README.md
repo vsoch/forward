@@ -22,7 +22,9 @@ are many possible use cases!
 
 ## Setup
 For interested users, a few tutorials are provided on the [Research Computing Lessons](https://vsoch.github.io/lessons) site.
-Brief instructions are also documented in this README. 
+Brief instructions are also documented in this README.
+
+For farmshare - please navigate to the README located in sbatches/farmshare/README.md.  
 
 ### Clone the Repository
 Clone this repository to your local machine.

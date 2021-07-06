@@ -16,7 +16,7 @@
 
 PORT=$1
 NOTEBOOK_DIR=${2:-/farmshare/scratch/users/$USER}
-CONTAINER=${3:-/farmshare/home/classes/bioe/301p/ce/ces}
+CONTAINER=${3:-$HOME/image_latest.sif}
 
 export SINGULARITY_CACHEDIR=/farmshare/user_data/${USER}/.singularity
 echo "Container is ${CONTAINER}"
