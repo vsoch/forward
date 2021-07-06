@@ -74,7 +74,7 @@ then
    CONTAINERSHARE=${CONTAINERSHARE:-${SHARE}}
 elif [[ "${RESOURCE}" == "farmshare" ]]
 then 
-   CONTAINERSHARE=${CONTAINERSHARE:-/farmshare/home/$FORWARD_USERNAME/image_latest.sif}
+   CONTAINERSHARE=${CONTAINERSHARE:-library://sohams/default/image:latest}
 fi
 
 
