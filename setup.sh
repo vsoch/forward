@@ -74,7 +74,7 @@ then
    CONTAINERSHARE=${CONTAINERSHARE:-${SHARE}}
 elif [[ "${RESOURCE}" == "farmshare" ]]
 then 
-   CONTAINERSHARE=${CONTAINERSHARE:-library://sohams/default/image:latest}
+   CONTAINERSHARE=${CONTAINERSHARE:-library://sohams/default/farmsharejupyter:latest}
 fi
 
 

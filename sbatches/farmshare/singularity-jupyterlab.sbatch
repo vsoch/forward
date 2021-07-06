@@ -16,7 +16,7 @@
 
 PORT=$1
 NOTEBOOK_DIR=${2:-/farmshare/scratch/users/$USER}
-CONTAINER=${3:-library://sohams/default/image:latest}
+CONTAINER=${3:-library://sohams/default/farmsharejupyter:latest}
 
 export SINGULARITY_CACHEDIR=/farmshare/user_data/${USER}/.singularity
 echo "Container is ${CONTAINER}"
