@@ -42,6 +42,7 @@ You can always edit `params.sh` later to change these configuration options.
  - **RESOURCE** should refer to an identifier for your cluster resource that will be recorded in your ssh configuration, and then referenced in the scripts to interact with the resource (e.g., `ssh sherlock`).
  - **PARTITION** If you intend to use a GPU (e.g., [sbatches/py2-tensorflow.sbatch](sbatches/py2-tensorflow.sbatch) the name of the PARTITION variable should be "gpu."
  - **CONTAINERSHARE** (optional) is a location on your cluster resource (typically world readable) where you might find containers (named by a hash of the container name in the [library]() that are ready to go! If you are at Stanford, leave this to be default. If you aren't, then ask your cluster admin about [setting up a containershare](https://www.github.com/vsoch/containershare)
+ - **CONNECTION_WAIT_SECONDS** refers to how many seconds the start.sh script waits before setting up port forwarding. If your cluster runs slow, or is particularly busy, this can be set at 30. 
 
 If you want to modify the partition flag to have a different gpu setup (other than `--partition gpu --gres gpu:1`) then you should set this **entire** string for the partition variable.
 
@@ -250,6 +251,11 @@ export TIMEOUT=3
 ```
 
 While the forward tool cannot control the busyness of slurm, these two strategies should help a bit.
+
+### mux_client_forward: forwarding request failed: Port forwarding failed 
+
+
+Similarly, if your cluster is slow, you may get this error after "== Setting up port forwarding ==". To fix this, increase your CONNECTION_WAIT_SECONDS. 
 
 ### I ended a script, but can't start
 

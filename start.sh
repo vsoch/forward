@@ -70,9 +70,10 @@ instruction_get_logs
 get_machine
 echo "notebook running on $MACHINE"
 
+sleep $CONNECTION_WAIT_SECONDS
+
 setup_port_forwarding
 
-sleep 10
 echo "== Connecting to notebook =="
 
 # Print logs for the user, in case needed
