@@ -80,8 +80,8 @@ fi
 echo
 echo "Finally, how many seconds would you like to wait for a connection?"
 echo
-read -p "Seconds to wait (default, 0) > "  CONNECTION_WAIT_SECONDS
-CONNECTION_WAIT_SECONDS=${CONNECTION_WAIT_SECONDS:-0}
+read -p "Seconds to wait (default, 10) > "  CONNECTION_WAIT_SECONDS
+CONNECTION_WAIT_SECONDS=${CONNECTION_WAIT_SECONDS:-10}
 
 
 
