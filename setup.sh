@@ -78,9 +78,11 @@ then
 fi
 
 echo
-echo "Finally, how many seconds would you like to wait for a connection (ideal for slower clusters, defaults to 0 seconds for no timeout)?"
+echo "Finally, how many seconds would you like to wait for a connection?"
 echo
-read -p "Seconds to wait > "  CONNECTION_WAIT_SECONDS
+read -p "Seconds to wait (default, 0) > "  CONNECTION_WAIT_SECONDS
+CONNECTION_WAIT_SECONDS=${CONNECTION_WAIT_SECONDS:-0}
+
 
 
 
