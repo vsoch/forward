@@ -77,6 +77,13 @@ then
    CONTAINERSHARE=${CONTAINERSHARE:-library://sohams/default/farmsharejupyter:latest}
 fi
 
+echo
+echo "Finally, how many seconds would you like to wait for a connection?"
+echo
+read -p "Seconds to wait (default, 0) > "  CONNECTION_WAIT_SECONDS
+CONNECTION_WAIT_SECONDS=${CONNECTION_WAIT_SECONDS:-0}
+
+
 
 
 MEM=20G
@@ -84,7 +91,7 @@ MEM=20G
 TIME=8:00:00
 
 
-for var in FORWARD_USERNAME PORT PARTITION RESOURCE MEM TIME CONTAINERSHARE MACHINEPREFIX DOMAINNAME USE_LSOF ISOLATEDCOMPUTENODE
+for var in FORWARD_USERNAME PORT PARTITION RESOURCE MEM TIME CONTAINERSHARE MACHINEPREFIX DOMAINNAME USE_LSOF ISOLATEDCOMPUTENODE CONNECTION_WAIT_SECONDS
 do
     echo "$var="'"'"$(eval echo '$'"$var")"'"'
 done >> params.sh
