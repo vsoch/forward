@@ -55,7 +55,7 @@ module load nccl
 ### 6. now, open ipython, run
 ```python
 import torch
-print(torch.cuda.is_avilable())
+print(torch.cuda.is_available())
 ```
 if print out is `True`, then you'er OK to use GPUs.
 
