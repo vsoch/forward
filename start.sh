@@ -58,6 +58,7 @@ command="sbatch
     --error=$RESOURCE_HOME/forward-util/$SBATCH_NAME.err
     --mem=$MEM
     --time=$TIME
+    --cpus-per-task=$CPUS_PER_TASK
     $RESOURCE_HOME/forward-util/$SBATCH_NAME $PORT \"${@:2}\""
 
 echo ${command}
