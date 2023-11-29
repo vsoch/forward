@@ -82,9 +82,18 @@ print_logs
 echo
 instruction_get_logs
 
-echo 
-echo "== Instructions =="
-echo "1. Password, output, and error printed to this terminal? Look at logs (see instruction above)"
-echo "2. Browser: http://$MACHINE:$PORT/ -> http://localhost:$PORT/..."
-echo "3. To end session: bash end.sh ${NAME}"
+if [ $NAME = "jupyter" ]
+then
+  echo
+  echo "== Instructions =="
+  echo "1. Obtain connection URL from jupyter.sbatch.err (see instruction above)"
+  echo "2. Enter URL in browser: http://localhost:$PORT/?token=..."
+  echo "3. To end session: bash end.sh ${NAME}"
+else
+  echo 
+  echo "== Instructions =="
+  echo "1. Password, output, and error printed to this terminal? Look at logs (see instruction above)"
+  echo "2. Browser: http://$MACHINE:$PORT/ -> http://localhost:$PORT/..."
+  echo "3. To end session: bash end.sh ${NAME}"
+fi
 
