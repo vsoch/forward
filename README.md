@@ -168,8 +168,8 @@ If you would like to request a custom notebook, please [reach out](https://www.g
 # To start a jupyter notebook in a specific directory ON the cluster resource
 bash start.sh jupyter <cluster-dir>
 
-# If you don't specify a path on the cluster, it defaults to your ${SCRATCH}
-bash start.sh jupyter /scratch/users/<username>
+# If you don't specify a path on the cluster, it defaults to your ${HOME}
+bash start.sh jupyter /home/users/<username>
 
 # To start a jupyter notebook with tensorflow in a specific directory
 bash start.sh py2-tensorflow <cluster-dir>

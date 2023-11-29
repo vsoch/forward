@@ -16,6 +16,7 @@ fi
 
 cd $NOTEBOOK_DIR
 
+source /etc/bashrc
 module use system
 module load singularity
 export SINGULARITY_CACHEDIR=$SCRATCH/.singularity

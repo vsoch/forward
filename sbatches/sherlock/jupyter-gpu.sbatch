@@ -8,6 +8,8 @@ else
     cd $NOTEBOOK_DIR
 fi
 
+source /etc/bashrc
+
 ## to compile libtorch C++ code, load these modules
 # module load gcc/7.3.0
 # module load gdb
