@@ -47,6 +47,7 @@ CONTAINER="${2}"
 NOTEBOOK_DIR="${3:-${SCRATCH}}"
 CONTAINERSHARE=${4:-/scratch/users/vsochat/share}
 
+source /etc/bashrc
 module use system
 module load singularity
 export SINGULARITY_CACHEDIR="${SCRATCH}/.singularity"

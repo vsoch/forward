@@ -37,6 +37,7 @@ PORT=$1
 CONTAINER="${2}"
 NOTEBOOK_DIR="${3:-${SCRATCH}}"
 
+source /etc/bashrc
 module use system
 module load singularity
 export SINGULARITY_CACHEDIR="${SCRATCH}/.singularity"
